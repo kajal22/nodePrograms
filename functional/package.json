@@ -1,0 +1,22 @@
+{
+  "name": "kajal",
+  "version": "1.0.0",
+  "description": "kajal",
+  "main": "\\",
+  "directories": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "commander": "^3.0.0",
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
+  },
+  "scripts": {
+    "test": "mocha "
+  },
+  "author": "",
+  "license": "ISC"
+}
