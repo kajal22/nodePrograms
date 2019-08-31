@@ -11,4 +11,4 @@ function Quadratic()
 
  return [a,b,c,quadratic]
 }
-module.exports=Quadratic()
+module.exports=Quadratic(                                                                      )

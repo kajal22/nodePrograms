@@ -8,7 +8,7 @@ function windchill()
      var v=user.questionInt()
     var result=Utility.windchil(t,v)
     console.log(result)
-    return [t,v,result] 
+    return [,v,result] 
 }
 
-module.exports=windchill()
+    module.exports=windchill()

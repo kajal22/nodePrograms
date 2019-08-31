@@ -28,11 +28,11 @@ YEAR(year)
 {
 if(year% 4==0 && year%100!=0 || year%400==0 )
 {
-    console.log("is leap year");
+    return true
 }
     else
     {
-    console.log("is not leap year");
+    return false
     }
 
 },
@@ -213,22 +213,128 @@ if(FormatString1==FormatString2)
 
 // prime number
 
-Isprime(i)
+Isprime(initial,last)
 {
-    var count=0
-for(var j=1;j<=i;j++)
+    let array=[]
+let count=0,val=0
+for(let i=initial;i<=last;i++)
 {
-    if(i%j==0)
+
+for(let j=1;j<=i;j++)
+{
+    if(Math.floor(i%j)==0)
     {
         count++
     }
-
 }
 if(count==2)
-{
-   return i
+{ 
+    array.push(i);
+    val++;
 }
+
+count=0
+ }
+ return array
 },
+
+
+anagram(arrayOfPrime)
+{
+    let find=[],isNotfind;
+    let Anagram=[];
+    let NotAnagram=[];
+
+    for(let i=0;i<arrayOfPrime.length;i++)
+    {
+        let strFirst="";
+
+        strFirst=strFirst+arrayOfPrime[i];
+        find=strFirst.split('')
+        find.sort();
+        strFirst=find.toString();
+         
+        for(let j=i+1;j<arrayOfPrime.length;j++)
+        {   isNotfind=true;
+            let secondMatch="";
+
+            secondMatch=secondMatch+arrayOfPrime[j];
+            secondArray=secondMatch.split('');
+            secondArray.sort();
+            secondMatch=secondArray.toString();
+
+            if(strFirst==secondMatch)
+            {   Anagram.push(arrayOfPrime[i])
+                Anagram.push(arrayOfPrime[j])
+                
+                isNotfind=false;
+                break;
+            }
+            
+        }
+        
+        if(isNotfind)
+        {
+            NotAnagram.push(arrayOfPrime[i]);
+           
+        }
+
+    }
+    return [Anagram,NotAnagram]
+},
+
+
+    
+//     let Anagram=[]
+//     let NotAnagram=[]
+// for(let i=0;i<arrayOfPrime.length;i++)
+// {
+//     let first=""
+//     first=first+arrayOfPrime[i]
+//     firstarray=first.split()
+//     firstarray.sort()
+//     first=firstarray.toString()
+
+//     for(let j=i+1;j<arrayOfPrime.length;j++)
+//     {
+//         isNotfind=true
+//         let second=""
+//     second=second+arrayOfPrime[j]
+//     secondarray=second.split()
+//     secondarray.sort()
+//     second=secondarray.toString()
+
+// if(first==second)
+// {   Anagram.push(arrayOfPrime[i])
+//     Anagram.push(arrayOfPrime[j])
+//     console.log("Anagram are :"+arrayOfPrime[i]+" with "+arrayOfPrime[j]);
+//     isNotfind=false;
+//     break;
+ 
+//  }
+//  }
+// if(isNotfind)
+
+//     {
+//         NotAnagram.push(arrayOfPrime[i]);
+       
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // BubbleSort code
@@ -358,36 +464,7 @@ DayOfWeek(M,D,Y)
   var m=(M+12*((14-M)/12)-2)
   var d= parseInt(((D+x+31*m/ 12)%7))
     
-
-   
-    if(d == 1)
-    {
-        console.log("Monday");
-    }
-    else if(d == 2)
-    {
-        console.log("Tuesday");
-    }
-    else if(d == 3)
-    {
-        console.log("Wednesday");
-    }
-    else if(d == 4)
-    {
-        console.log("Thursday");
-    }
-    else if(d == 5)
-    {
-        console.log("Friday");
-    }
-    else if(d == 6)
-    {
-        console.log("Saturday");
-    }
-    else if(d == 0)
-    {
-        console.log("Sunday");
-    }
+return d
   
 },
 
@@ -649,4 +726,127 @@ c=matrix[0][2]
 return c
 
 },
+
+
+
+parenthesis(Exp)
+{
+
+
+    for(let i=0;i<Exp.length;i++)
+    {
+    if (current == '{' || current == '(' || current== '[')
+    {
+    this.stack.push(current[i]);
+    }
+    if (current == '}' || current== ')' || current == ']')
+    {
+
+    if (this.stack.isempty())
+    {
+    return "Balanced";
+    }
+    else{
+    this.stack.pop();
+    }
+    return "Not Balanced";
+    }
+
 }
+},   
+   //DECK OF CARDS***********************************
+shuffle(arrayOfcards, cardsCount) {
+       
+    /*** traverse whole cards array */
+    for (let i = 0; i < cardsCount; i++) {
+        /** generate random number and used as index of arrayOfCards */
+        let randomNumber = Math.floor(Math.random() * 51) + 1
+
+        if (randomNumber == undefined) throw "random number not generated"
+
+        /** swapping logic */
+        let temp = arrayOfcards[randomNumber];
+        arrayOfcards[randomNumber] = arrayOfcards[i];
+        arrayOfcards[i] = temp;
+    }
+    /** return shuffle cards array */
+    return arrayOfcards;
+
+},
+
+divideCards(a, SUIT, RANK) {
+
+    let list=new linkedList.LinkedList;
+
+        /** 2-dimenssional array for hold distributed players cards */
+        let player = [[]]
+        /** index */
+        let i = 0;
+        let j = 0;
+
+        /** outer for loop iterate four times bcoz we have four player */
+        for (let p = 0; p < 4; p++) {
+
+            //initialize first dimenssion
+            player[p] = []
+            /** inner loop iterate 9 time bcoz we distribute 9 cards to each */
+            for (let c = 0; c < 9; c++) {
+
+                /** main logic */
+                if (a[i] >= 0 && a[i] < 13) {
+                    player[p][c] = "" + SUIT[j] + " " + RANK[a[i] % 13];
+                    list.addElement( SUIT[j] );
+                    list.addElement(RANK[a[i] % 13])
+
+                } else if (a[i] >= 13 && a[i] < 26) {
+                    player[p][c] = "" + SUIT[j + 1] + " " + RANK[a[i] % 13];
+                    list.addElement( SUIT[j] );
+                    list.addElement(RANK[a[i] % 13])
+
+                } else if (a[i] >= 26 && a[i] < 39) {
+                    player[p][c] = "" + SUIT[j + 2] + " " + RANK[a[i] % 13];
+                    list.addElement( SUIT[j] );
+                    list.addElement(RANK[a[i] % 13])
+
+                } else if (a[i] >= 39 && a[i] < 52) {
+                    player[p][c] = "" + SUIT[j + 3] + " " + RANK[a[i] % 13];
+                    list.addElement( SUIT[j] );
+                    list.addElement(RANK[a[i] % 13])
+
+                }
+                i++; //increase arrayOfCards array index
+
+            }
+        }
+        /** calling sort  */
+        //this.sortPack(list,RANK)
+        /** return player with cards */
+        return player;
+    
+        
+},
+sortPack(list,rank)
+        {
+            for(let i=0;i<4;i++)
+            {
+                for(let j=0;j<rank.length;j++)
+                {
+                    for(let k=0;k<9;k+2)
+                    {
+                        
+                    }
+                }
+            }
+        }
+    
+}
+
+
+
+
+
+
+    
+
+
+     

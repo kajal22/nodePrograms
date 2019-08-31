@@ -4,7 +4,7 @@ const result= require('../functional/quadratic');
 describe("positive testing for harmonic", function () {
   
 it("the input must be a number ", function(){
-    assert.isNumber(result[0], "Entered inputs should be numbers")
+    assert.isNumber(result[0], "Enter ed inputs should be numbers")
  });
  it("the input should not be string ", function(){
     assert.isNotString(result[0], "Entered inputs should  not be string")
