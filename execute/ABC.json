@@ -1,7 +1,6 @@
 
-{
-"name":"kajal",
-"age":"21",
-"gender":"female",
-"car":"honda"
-}
+
+"name" : "kajal",
+"age" : "21",
+"gender" : "female",
+"car" : "honda",

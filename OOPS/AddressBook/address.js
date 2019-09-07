@@ -6,7 +6,7 @@ class address {
 
         AddPersonData(object) {
                 let format = /^[a-zA-Z]+$/;
-                let formatNum =/^\d{10,10}$/; ;
+                let formatNum =/^\d{10,10}$/; 
 
               try  {       
                        

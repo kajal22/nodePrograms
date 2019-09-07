@@ -4,5 +4,5 @@ const myEmitter=new MyEmitter();
 myEmitter.on('event',()=>{
 console.log('an event occur');
 });
-myEmitter.emit('event');
+myEmitter.emit('events');
 

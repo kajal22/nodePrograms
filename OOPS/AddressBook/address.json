@@ -1,1 +1,29 @@
-[{"firstname":"kaju","lastname":"choudhary","address":"navi mumbai","city":"mumbai","state":"maharashtra","zip":86754,"phonenumber":98543213},{"firstname":"guru","lastname":"murkar","address":"harche","city":"rtn","state":"maha","zip":12,"phonenumber":9158265223},{"firstname":"vaishu","lastname":"sawant","address":"pune","city":"aurangabad","state":"maha","zip":343,"phonenumber":9854321456}]
+[
+    {
+        "firstname": "kaju",
+        "lastname": "choudhary",
+        "address": "navi mumbai",
+        "city": "mumbai",
+        "state": "maharashtra",
+        "zip": 86754,
+        "phonenumber": 98543213
+    },
+    {
+        "firstname": "guru",
+        "lastname": "murkar",
+        "address": "harche",
+        "city": "rtn",
+        "state": "maha",
+        "zip": 12,
+        "phonenumber": 9158265223
+    },
+    {
+        "firstname": "vaishu",
+        "lastname": "sawant",
+        "address": "pune",
+        "city": "aurangabad",
+        "state": "maha",
+        "zip": 343,
+        "phonenumber": 9854321456
+    }
+]

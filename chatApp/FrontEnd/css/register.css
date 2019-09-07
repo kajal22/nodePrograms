@@ -1,0 +1,67 @@
+body {
+    background-color:mediumslateblue;
+    text-align: center
+  }
+  h1 {
+    color: red;
+     }
+  input[type=email], input[type=password] {
+    width: 60%;
+    padding: 2px;
+    margin: 10px;
+    
+    
+    }
+    .register{
+  
+      padding: 16px;
+      width: 25%;
+      height: 80%;
+      background-color:rgb(240, 240, 13);
+      position: absolute;
+      left: 35%
+      
+      }
+
+.login{
+  
+    padding: 16px;
+    width: 25%;
+    height: 35%;
+    background-color:lightgoldenrodyellow;
+    position: absolute;
+    left: 35%
+    
+    }
+   .forget{
+  
+      padding: 16px;
+      width: 25%;
+      height: 30%;
+      background-color:lightgoldenrodyellow;
+      position: absolute;
+      left: 35%
+      
+      }
+      .createNew{
+  
+        padding: 16px;
+        width: 25%;
+        height: 50%;
+        background-color:lightgoldenrodyellow;
+        position: absolute;
+        left: 35%
+        
+        }
+
+        .signup{
+          width: 40%;
+          height: 50%;
+          background-color:green;
+        }
+        
+        .send{
+          width: 40%;
+          height: 50%;
+          background-color:green;
+        }
