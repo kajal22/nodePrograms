@@ -1,5 +1,22 @@
+
+/*************************************************************************
+
+* Purpose          : chatApp
+* @file            : model.js
+* @author          : kajal choudhary
+* @version         : 1.0
+* @since           : 5-09-2019
+* 
+**************************************************************************/
+
+
+
+
 const bcrypt = require('bcrypt');
 const mongoose =require('mongoose')
+let tokenGenrator=require('../../middleWare/tokengenrate')
+let nodeMail=require('../../middleWare/nodemailer')
+   
 const Schema = mongoose.Schema;
 // create a schema 
 let registrationSchema= new Schema({
@@ -29,11 +46,10 @@ exports.registrationModel=(userData,callback)=>{
     
         if(err)
         {
-          console.log("error occured")
+          callback("error occured")
         }
         else if(data.length> 0) 
         {
-        console.log("email already exist")
 
          return callback("already registerd, login directly")
         }
@@ -60,7 +76,7 @@ exports.registrationModel=(userData,callback)=>{
         else if(data.length> 0) 
         {
             
-            callback(null,data)
+            callback(null,"new user entered")
         }
     })
 }
@@ -85,7 +101,7 @@ exports.loginModel=(loginData,callback)=>{
                 }
                 else if(res===true)
                 {
-                   callback("password matches")
+                   callback(null,"login successfull")
                 }
                 else if(res===false)
                 {
@@ -103,27 +119,76 @@ exports.loginModel=(loginData,callback)=>{
 //***********************/
 
 exports.forgetModel=(forgetData,callback)=>{ 
-    let mail=require('../../middleWare/nodemailer')
-    let emailId=forgetData
+    
 
     model.find({'email':forgetData.email},(err,data)=>{ 
         console.log(data)
         if(err) {
             console.log("error occured")
-           
                 } 
         else if(data.length>0)
         {
-           mail.useremail(emailId)
-            callback(err)
-        }
-        else
-        {
-            callback(data)
+            console.log("matched")
 
-        }
-    })
+            let email = {
+                        'email': data[0].email
+                    }
+                    // create new token 
+                    let newToken = tokenGenrator.generateToken(email);
+                    console.log(newToken);
+
+             // send on that email-id       
+             nodeMail.sendmail(forgetData.email,newToken,(err,data)=>{ 
+               if(err)
+               {
+            callback(err)
+                }
+              else
+                {
+            callback(data)
+                }
+        })
+        
+       }
+     
+    else 
+    {
+        callback("invalid email")
+    }
+})
 }
+
+exports.resetModel=(resetData,callback)=>{ 
+
+        console.log("inside modelpassword " + resetData.password);
+        console.log("id is" + resetData.email);
+
+        encryptPassword(resetData.password, (err, hashedPassword) => {
+            if (err) {
+                return callback(err)
+            }
+            else {
+                Model.findOneAndUpdate({ '_id': resetData.email }, { $set: { 'password':hashedPassword} }, (err, data) => {
+                    if (err) {
+                        console.log("update document error");
+                        return callback(err + " update document error")
+                    } else {
+                        if (data) {
+                            console.log("update document success");
+                            return callback(null, data)
+                        } else {
+                            console.log("user credential not found");
+                            return callback("user credential not found")
+                        }
+                    }
+                })
+            }
+        })
+
+    }
+
+
+
 
 
 

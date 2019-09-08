@@ -2,8 +2,8 @@
 /*************************************************************************
 
 * Purpose          : chatApp
-* @file            : 
-* @author          : kajal
+* @file            : server.js
+* @author          : kajal choudhary
 * @version         : 1.0
 * @since           : 5-09-2019
 * 
@@ -39,7 +39,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/chatApp', { useNewUrlParser: true },
         console.log("not connected");
         
     }else{
-        console.log("connected");
+        console.log("succussfully connected!!!");
         
     }
 });

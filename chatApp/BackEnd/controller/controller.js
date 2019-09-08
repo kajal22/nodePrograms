@@ -1,3 +1,17 @@
+
+/*************************************************************************
+
+* Purpose          : chatApp
+* @file            : controller.js
+* @author          : kajal choudhary
+* @version         : 1.0
+* @since           : 5-09-2019
+* 
+**************************************************************************/
+
+
+
+
 exports.registrationControl=(req,res)=>{
   
 
@@ -8,8 +22,9 @@ req.checkBody('lastName','lastName should not be string').notEmpty()
 req.checkBody('email','email should not be empty').notEmpty()
 req.checkBody('email','email should be in format ').isEmail()
 req.checkBody('lastName','password should not empty').notEmpty()
-req.checkBody('password','password of minimum length ').isLength({min:5})
-req.checkBody('password','password of maximum length ').isLength({max:10})
+req.checkBody('password','password should not empty ').notEmpty()
+// req.checkBody('password','password of minimum length ').isLength({min:5})
+// req.checkBody('password','password of maximum length ').isLength({max:10})
 let error= req.validationErrors()
 let response={}
 
@@ -42,11 +57,11 @@ else
 service.registrationService(userData,(err,data)=>{
 
     if(err){
-        return res.status(400).send(err)
+        return res.status(422).send(err)
     }
     else{
        
-        return res.status(400).send("Registration successfull.")
+        return res.status(200).send(data)
     }
 })
 }
@@ -56,9 +71,9 @@ service.registrationService(userData,(err,data)=>{
 exports.loginControl=(req,res)=>{
     req.checkBody('email','email should not be empty').notEmpty()
     req.checkBody('email','email should be in format ').isEmail()
-  
-    req.checkBody('password','password of minimum length ').isLength({min:5})
-    req.checkBody('password','password of maximum length ').isLength({max:10})
+    req.checkBody('password','password should not empty ').notEmpty()
+    // req.checkBody('password','password of minimum length ').isLength({min:5})
+    // req.checkBody('password','password of maximum length ').isLength({max:10})
 
     let error= req.validationErrors()
     let response={}
@@ -83,11 +98,11 @@ exports.loginControl=(req,res)=>{
     service.loginService(loginData,(err,data)=>{
     
         if(err){
-            return res.status(400).send(err)
+            return res.status(422).send(err)
         }
         else{
            
-            return res.status(400).send("Login successfull.")
+            return res.status(200).send(data)
         }
     })
     }
@@ -109,7 +124,7 @@ exports.loginControl=(req,res)=>{
         }
         else 
         {
-    
+          
           const service=require('../services/services')
           let forgetData={
           
@@ -122,12 +137,50 @@ exports.loginControl=(req,res)=>{
         service.forgetService(forgetData,(err,data)=>{
         
             if(err){
-                return res.status(400).send(err)
+                return res.status(422).send(err)
             }
             else{
                
-                return res.status(400).send("sent successfully.")
+                return res.status(200).send("sent successfully.")
             }
         })
         }
         }
+
+ //***************/
+        exports.resetControl=(req,res)=>{
+        req.checkBody('password','password should not empty ').notEmpty()
+    // req.checkBody('password','password of minimum length ').isLength({min:5})
+    // req.checkBody('password','password of maximum length ').isLength({max:10})
+
+    let error= req.validationErrors()
+    let response={}
+    
+    if(error)
+    {
+        response.success=false
+        return res.status(422).send("entered invalid inputs")
+    }
+    else 
+    {
+
+      const service=require('../services/services')
+      let resetData={
+
+      password:req.body.password,
+    }
+    
+    
+    // the userdata will send to services
+    service.resetService(resetData,(err,data)=>{
+    
+        if(err){
+            return res.status(422).send(err)
+        }
+        else{
+           
+            return res.status(200).send("reset password successfully.!")
+        }
+    })
+    }
+    }
