@@ -1,8 +1,9 @@
-exports.generateToken=(email)=>
+const jwt = require('jsonwebtoken');
+
+exports.generateToken=(payload)=>
 {
-    let jwt = require('jsonwebtoken')
-    let token = jwt.sign({'email':email},
-        'secret',{expiresIn:2 })
+    
+    let token = jwt.sign(payload , 'secret',{expiresIn:'2h' })
        
        return token; 
 }
@@ -11,30 +12,31 @@ exports.generateToken=(email)=>
 
 
 
-
-
-
-
 exports.verifyToken=(req,res,next)=>{
 
     let token=req.headers['token'];
 
     if(token){
-        jwt.verify(token,'privateKey',(err,decoded)=>{
+        jwt.verify(token,'secret',(err,data)=>{
             if(err)
             {
-                res.status(400).send(" Token has expired")
+                
+                res.status(400).send(" Token has expired !!!please try again")
             }else{
-                console.log("token "+JSON.stringify(decoded));
-                req.decoded=decoded;
+
+                console.log("hello");
+                
+                 console.log(data)
+    
+                req.id=data.id;
                 next();
             }
     
         })
 
     }else{
-        console.log("token not got");
-        res.status(400).send(" Token not got")
+        console.log("token have not got");
+        res.status(400).send(" Token have not got")
         
     }
 

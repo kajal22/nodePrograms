@@ -51,7 +51,7 @@ exports.registrationModel=(userData,callback)=>{
         else if(data.length> 0) 
         {
 
-         return callback("already registerd, login directly")
+        return callback("already registerd, login directly")
         }
          
      else{
@@ -130,11 +130,11 @@ exports.forgetModel=(forgetData,callback)=>{
         {
             console.log("matched")
 
-            let email = {
-                        'email': data[0].email
+            let payload = {
+                        '_id': data[0]._id
                     }
                     // create new token 
-                    let newToken = tokenGenrator.generateToken(email);
+                    let newToken = tokenGenrator.generateToken(payload);
                     console.log(newToken);
 
              // send on that email-id       
@@ -158,34 +158,30 @@ exports.forgetModel=(forgetData,callback)=>{
 })
 }
 
-exports.resetModel=(resetData,callback)=>{ 
+exports.resetModel=(resetdata,callback)=>{ 
 
-        console.log("inside modelpassword " + resetData.password);
-        console.log("id is" + resetData.email);
-
-        encryptPassword(resetData.password, (err, hashedPassword) => {
-            if (err) {
-                return callback(err)
-            }
-            else {
-                Model.findOneAndUpdate({ '_id': resetData.email }, { $set: { 'password':hashedPassword} }, (err, data) => {
+                console.log(resetdata)
+        let hashedPassword=encryptPassword(resetdata.password)
+      
+                
+                model.findOneAndUpdate({ '_id': resetdata.id }, { $set: { 'password':hashedPassword} }, (err, data) => {
                     if (err) {
-                        console.log("update document error");
-                        return callback(err + " update document error")
+                        console.log("update the error");
+                        return callback(err + " update the error")
                     } else {
                         if (data) {
-                            console.log("update document success");
+                            console.log("update successfully");
                             return callback(null, data)
                         } else {
-                            console.log("user credential not found");
+                            console.log("user credential not found,check it");
                             return callback("user credential not found")
                         }
                     }
                 })
             }
-        })
 
-    }
+
+    
 
 
 

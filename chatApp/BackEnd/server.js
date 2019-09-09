@@ -28,6 +28,8 @@ let routes=require('../BackEnd/routes/routes')
 //port number
 const PORT = 4001;
 
+app.use(express.static('../FrontEnd'));
+
 app.use(bodyParser.json());   
                
 app.use('/chatApp',routes)

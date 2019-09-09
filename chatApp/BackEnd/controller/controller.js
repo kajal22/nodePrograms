@@ -148,7 +148,10 @@ exports.loginControl=(req,res)=>{
         }
 
  //***************/
-        exports.resetControl=(req,res)=>{
+
+    exports.resetControl=(req,res)=>{
+        console.log("hello");
+        
         req.checkBody('password','password should not empty ').notEmpty()
     // req.checkBody('password','password of minimum length ').isLength({min:5})
     // req.checkBody('password','password of maximum length ').isLength({max:10})
@@ -165,22 +168,27 @@ exports.loginControl=(req,res)=>{
     {
 
       const service=require('../services/services')
-      let resetData={
 
+     console.log("hello");
+     
+      console.log("id is "+req.id);
+
+      // pass the id and password 
+      let resetData={
       password:req.body.password,
-    }
-    
+      id:req.id,
+      }
     
     // the userdata will send to services
     service.resetService(resetData,(err,data)=>{
     
         if(err){
             return res.status(422).send(err)
-        }
-        else{
+               }
+        else {
            
             return res.status(200).send("reset password successfully.!")
-        }
+             }
     })
     }
     }
