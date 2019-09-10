@@ -7,11 +7,10 @@ app.controller('forgetCtrl',function($scope,forgetService){
         'email':$scope.email,
         
     }
+    console.log("login data",forgetData);
+    forgetService.forgetServiceUser(forgetData)
     } 
 
-    console.log("login data",forgetData);
-    
-    forgetService.forgetServiceUser(forgetData)
-    
+  
 
 })

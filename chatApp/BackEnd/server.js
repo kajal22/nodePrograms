@@ -26,13 +26,13 @@ let mongoose = require('mongoose');
 let routes=require('../BackEnd/routes/routes')
 
 //port number
-const PORT = 4001;
+const PORT = 4000;
 
 app.use(express.static('../FrontEnd'));
 
 app.use(bodyParser.json());   
                
-app.use('/chatApp',routes)
+app.use('/',routes)
 
 //here give database connectivity
 mongoose.connect('mongodb://127.0.0.1:27017/chatApp', { useNewUrlParser: true },(err)=>{

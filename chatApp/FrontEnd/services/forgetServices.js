@@ -1,10 +1,12 @@
 
 app.service("forgetService", function ($http, $location) {
     this.forgetServiceUser = function (data, $scope) {
+
+        console.log("into forget service !");
         $http(
             {
                 method: 'POST',
-                url: 'http://localhost:4001/forgetPassword',
+                url: 'http://localhost:4000/forgetPassword',
                 data: data
             }).then(
                 function (response) {
@@ -14,7 +16,7 @@ app.service("forgetService", function ($http, $location) {
                     $scope.forgetPassword = function () {
                         alert(" done Successfully...")
                     }
-                    $location.path('/#/Login');
+                    $location.path('/newpassword');
                 }).catch(function (error) {
                     $scope.forgetPassword = function () {
                         alert(" failed...")

@@ -1,9 +1,12 @@
 app.service("registerService", function ($http, $location) {
     this.registerServicesUser = function (data, $scope) {
+
+        console.log("into register service !");
+        
         $http(
             {
                 method: 'POST',
-                url: 'http://localhost:4001/registration',
+                url: 'http://localhost:4000/registration',
                 data: data
             }).then(
                 function (response) {
@@ -14,6 +17,7 @@ app.service("registerService", function ($http, $location) {
                         alert("Registration done Successfully...")
                     }
                     $location.path('/#/login');
+
                 }).catch(function (error) {
                     $scope.registration = function () {
                         alert("Registration failed...")

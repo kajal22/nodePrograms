@@ -42,6 +42,8 @@ let encryptPassword=bcrypt.hashSync(password,salt)
 
 exports.registrationModel=(userData,callback)=>{
 
+    console.log("in register model !");
+    
     model.find({email:userData.email},(err,data)=>{
     
         if(err)
@@ -74,7 +76,9 @@ exports.registrationModel=(userData,callback)=>{
             callback(err)
         }
         else if(data.length> 0) 
-        {
+        {   
+            console.log("\n\n\n\t\t\tNEW USER REGISTERED SUCCESFULLY !!!!   ");
+            
             
             callback(null,"new user entered")
         }
@@ -100,7 +104,8 @@ exports.loginModel=(loginData,callback)=>{
                     console.log(err)
                 }
                 else if(res===true)
-                {
+                {   console.log("\n\n\t\tLOGIN SUCCESFULL !");
+                
                    callback(null,"login successfull")
                 }
                 else if(res===false)
@@ -163,7 +168,7 @@ exports.resetModel=(resetdata,callback)=>{
                 console.log(resetdata)
         let hashedPassword=encryptPassword(resetdata.password)
       
-                
+                                                                          
                 model.findOneAndUpdate({ '_id': resetdata.id }, { $set: { 'password':hashedPassword} }, (err, data) => {
                     if (err) {
                         console.log("update the error");
@@ -192,35 +197,3 @@ exports.resetModel=(resetdata,callback)=>{
 
 
 
-
-
-
-
-//    model.find({'email':loginData.email},(err,data)=>{ 
-//         console.log(data)
-//         if(err)
-//         {
-//           console.log("error not found email-id")
-//         }
-//         else 
-//         {
-            
-//             bcrypt.compare(loginData.password,data[0].password, function(err, data) {
-//                 if(err) {
-    //          else if(data===true)
-    //            {
-//                 return callback("password not matched")
-//                 } else if (data===false){
-                    
-//                     return callback(null," password matched")
-//                 }
-
-//               });
-    
-        
-//      }
-// else{
-//     callback("email not found")
-// }
-//  })
-//  }

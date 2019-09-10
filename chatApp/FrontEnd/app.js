@@ -1,7 +1,7 @@
 let app = angular.module('chatApp', ['ui.router']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-    console.log(" app .js ");
+    console.log(" in app .js ");
 
 
 
@@ -25,12 +25,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controller: 'forgetCtrl'
 
         })
-        .state('newpassword', {
-            url: '/newpassword',
+        .state('resetPassword', {
+            url: '/resetPassword/:token',
             templateUrl: 'templates/createNewPass.html',
             controller: 'newpasswordCtrl'
 
         })
     $urlRouterProvider.otherwise('/login');
 }])
-

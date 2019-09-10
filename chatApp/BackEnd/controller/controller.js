@@ -35,12 +35,6 @@ if(error)
 }
 
 
-// if(!req.body)
-// {
-//     return res.status(400).send({
-//         messege: 'registration is empty'
-//     })
-// }
 
 else 
 {

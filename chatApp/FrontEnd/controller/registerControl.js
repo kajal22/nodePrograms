@@ -1,8 +1,9 @@
-app.controller('registrationCtrl',function($scope,registrationService){
+app.controller("registrationCtrl",function($scope,registerService){
 
-    console.log("registration called");
+    console.log("in to registration controller .... ");
     
     $scope.registration=function(){
+        
         let registrationData={
             'firstName':$scope.firstName,
             'lastName':$scope.lastName,
@@ -11,7 +12,7 @@ app.controller('registrationCtrl',function($scope,registrationService){
         }
         console.log("registration data",registrationData);
     
-    registrationService.registerServicesUser(registrationData,$scope);
+    registerService.registerServicesUser(registrationData,$scope);
     }
     
     
