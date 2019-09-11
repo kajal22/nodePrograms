@@ -12,14 +12,16 @@ app.service('serviceLogin', function ($http, $location) {
             data: data
         }).then(
 
-            function successCallback(response) {
+            function (response) {
 
                 console.log("login successful at servicelogin in client side");
-              
-                $scope.login=function(){
-                    alert("LOGIN SUCCESFULL !")
-                }
-                $location.path('/#/login')
+                console.log(response.data.data)
+                console.log("login Successfully!!")
+                localStorage.setItem('token',response.data.data.token)
+
+                $location.path('/dashboard');
+
+               
             },
             
         );

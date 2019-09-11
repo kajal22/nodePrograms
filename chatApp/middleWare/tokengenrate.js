@@ -14,7 +14,8 @@ exports.generateToken=(payload)=>
 
 exports.verifyToken=(req,res,next)=>{
 
-    let token=req.headers['token'];
+    let token=req.body.token;
+    console.log(token)
 
     if(token){
         jwt.verify(token,'secret',(err,data)=>{
@@ -28,7 +29,8 @@ exports.verifyToken=(req,res,next)=>{
                 
                  console.log(data)
            // get id and expireTime,check object of id is presemt or not
-                req.id=data.id;
+                req.body.id=data._id;
+                console.log(data)
                 next();
             }
     

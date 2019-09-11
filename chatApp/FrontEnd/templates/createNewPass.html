@@ -6,18 +6,15 @@
         <h1>Create New Password</h1>
 
 <div>
-        <label><b>Reset Password</b></label><br>
-        <input type="text" placeholder="Reset Password" ng-model="Password"><br><br>
-        </div>
+    <div>
+        <label><b>Restet Password</b></label>
+        <input type="password" placeholder="Password" ng-model="password"><br><br>
+      </div>
 
+      
         <div>
-        <label><b>Conform Password</b></label><br>
-        <input type="text"  placeholder="Conform Password" ng-model="Password"><br><br>
-        </div> 
-
-        <div>
-        <button type="submit" ng-click='newpassword()'>Done</button>&nbsp;&nbsp;
-        <button type="submit" ng-click='newpassword()'>Cancel</button>
+            <button type="sumbit" value="resetpassword" ng-click="resetPassword()">ResetPassword</button>
+        
         </div> 
     </div>
 </form>

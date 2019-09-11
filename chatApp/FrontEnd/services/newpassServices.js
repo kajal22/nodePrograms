@@ -3,19 +3,20 @@ app.service("newpasswordService", function ($http, $location) {
         $http(
             {
                 method: 'POST',
-                url: 'http://localhost:4001/resetPassword',
+                url: 'http://localhost:4000/resetPassword',
                 data: data
             }).then(
                 function (response) {
                     console.log("created successfully");
                     console.log(response);
 
-                    $scope.newpassword = function () {
+                    $scope.resetPassword = function () {
                         alert(" done Successfully...")
+                        $location.path('/#/login')
                     }
-                    $location.path('/newpassword');
+                    $location.path('/resetPassword');
                 }).catch(function (error) {
-                    $scope.newpassword = function () {
+                    $scope.resetPassword = function () {
                         alert(" failed...")
                     }
                     console.log(" failed..", error)

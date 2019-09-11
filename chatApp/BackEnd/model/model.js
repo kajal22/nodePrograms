@@ -97,6 +97,11 @@ exports.loginModel=(loginData,callback)=>{
         } 
         else if(data.length>0)
         {
+            let payload = {
+                '_id': data[0]._id
+            }
+           
+
             for(let i=0;i<data.length;i++){
             bcrypt.compare(loginData.password,data[0].password,(err,res)=>{ 
                 if(err)
@@ -104,9 +109,23 @@ exports.loginModel=(loginData,callback)=>{
                     console.log(err)
                 }
                 else if(res===true)
-                {   console.log("\n\n\t\tLOGIN SUCCESFULL !");
-                
-                   callback(null,"login successfull")
+                {   
+                   
+                 console.log("\n\n\t\tLOGIN SUCCESSFULL !");
+                 let newToken = tokenGenrator.generateToken(payload);
+                 
+                 loginResp={
+                    'success':true,
+                    'messege':'sucessfull login',
+                    'data':{
+                         email:data[0].email,
+                         userId:data[0]._id,
+                         name:data[0].firstName,
+                         token:newToken
+                    }
+                }
+                callback(null,loginResp);
+           
                 }
                 else if(res===false)
                 {
@@ -114,8 +133,8 @@ exports.loginModel=(loginData,callback)=>{
 
                 }
             })
-            }
-        } 
+        }
+    } 
         else{
             callback("email not found")
             }
@@ -186,7 +205,26 @@ exports.resetModel=(resetdata,callback)=>{
             }
 
 
+            /*****modified****/
     
+            exports.getListDataModel=(callback)=>{ 
+                model.find({},(err,userData) =>{
+                    if(err)
+                    {
+                    return callback(err)
+                    }
+                    else if(userData.length>0)
+                    {
+                     
+                        
+                      return callback(null,userData)
+                    }
+                    else
+                    {
+                    return callback(null,false)
+                    }
+                })
+            }
 
 
 

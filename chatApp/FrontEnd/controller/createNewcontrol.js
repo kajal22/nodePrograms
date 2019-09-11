@@ -1,15 +1,18 @@
-app.controller('newpasswordCtrl',function($scope,newpasswordService){
+app.controller('newpasswordCtrl',function($scope,$stateParams,newpasswordService){
 
-    console.log("newpassword called");
+    console.log("newpassword control called");
+  
+    console.log("token"+$stateParams.token)
     
-    $scope.newpassword=function(){
+    $scope.resetPassword=function(){
     let newpasswordData={
-        'password':$scope.password
+        'password':$scope.password,
+        'token':$stateParams.token
         
     }
     console.log("newpassword data",newpasswordData);
     
-    newpasswordService.newpasswordServiceUser(newpasswordData)
+    newpasswordService.newpasswordServiceUser(newpasswordData, $scope)
     } 
 
     

@@ -31,5 +31,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controller: 'newpasswordCtrl'
 
         })
+
+        .state('dashboard', {
+            url: '/dashboard',
+            templateUrl: 'templates/dashboard.html',
+        })   
     $urlRouterProvider.otherwise('/login');
 }])

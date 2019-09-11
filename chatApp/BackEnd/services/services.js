@@ -71,8 +71,30 @@ model.resetModel(resetData,(err,data)=>{
    callback(err)
     }
     else{
-        
+        // get the data of data(from model of data) pass to local storage in front
     callback(null,data)
     }
 })
 }
+
+
+ /***********modified*******/
+exports.getListDataService=(callback)=>{
+    const model=require('../model/model')
+
+model.getListDataModel((err,data)=>{
+
+    if(err)
+    {
+  return callback(err)
+    }
+    else{
+        // get the data of data(from model of data) pass to local storage in front
+        console.log("i am in services");
+    
+    return callback(null,data)
+    }
+})
+}
+
+

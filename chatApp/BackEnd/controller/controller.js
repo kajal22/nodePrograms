@@ -92,7 +92,7 @@ exports.loginControl=(req,res)=>{
     service.loginService(loginData,(err,data)=>{
     
         if(err){
-            return res.status(422).send(err)
+            return res.status(400).send(err)
         }
         else{
            
@@ -165,12 +165,12 @@ exports.loginControl=(req,res)=>{
 
      console.log("hello");
      
-      console.log("id is "+req.id);
+      console.log("id is "+req.body.id);
 
       // pass the id and password 
       let resetData={
       password:req.body.password,
-      id:req.id,
+      id:req.body.id,
       }
     
     // the userdata will send to services
@@ -181,8 +181,40 @@ exports.loginControl=(req,res)=>{
                }
         else {
            
-            return res.status(200).send("reset password successfully.!")
+            return res.status(200).send(data)
              }
     })
     }
     }
+
+ /***********modified*******/
+    exports.getListDataControl=(req,res)=>{
+    let error= req.validationErrors()
+  
+    
+    if(error)
+    {
+        return res.status(422).send(error)
+    }
+    else 
+    {
+          
+      const service=require('../services/services')
+
+     console.log(" in controlller");
+    
+    // the userdata will send to services
+    service.getListDataService((err,data)=>{
+    
+        if(err){
+            return res.status(400).send(err)
+               }
+        else {
+           console.log("controller");
+           
+            return res.status(200).send(data)
+             }
+    })
+    }
+    }
+    
