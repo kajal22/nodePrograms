@@ -1,15 +1,31 @@
 
-const model=require('../model/chatModel')
+const chatModel=require('../model/chatModel')
 
-exports.chatAppService=(resetData,callback)=>{
-    
-model.chatAppModel(resetData,(err,data)=>{
-console.log("service")
+exports.chatAppService=(chatData,callback)=>{
+    console.log("service")
+    chatModel.chatAppModel(chatData,(err,data)=>{
+
     if(err)
     {
    return callback(err)
     }
     else{ 
+    return callback(null,data)
+    }
+})
+}
+
+/********/
+exports.getChatService=(callback)=>{
+
+    chatModel.getChatModel((err,data)=>{
+        console.log("i am in services");
+    if(err)
+    {
+  return callback(err)
+    }
+    else{
+    
     return callback(null,data)
     }
 })

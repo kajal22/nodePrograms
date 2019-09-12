@@ -1,6 +1,6 @@
 const express = require('express')
 const chatService=require('../services/chatService')
-const service=require('../services/services')
+
 exports.chatAppControl=(req,res)=>{
   
   
@@ -10,7 +10,8 @@ exports.chatAppControl=(req,res)=>{
         senderId:req.body.senderId,
         senderName:req.body.senderName,
         recieverId:req.body.recieverId,
-        recieverName:req.body.recieverName
+        recieverName:req.body.recieverName,
+        message:req.body.message
       }
     
     
@@ -27,3 +28,31 @@ exports.chatAppControl=(req,res)=>{
     })
     }
     
+/*************/
+    exports.getChatControl=(req,res)=>{
+      let error= req.validationErrors()
+    
+      
+      if(error)
+      {
+          return res.status(422).send(error)
+      }
+      else 
+      {
+  
+       console.log(" in controlller");
+      
+      // the userdata will send to services
+      chatService.getChatService((err,data)=>{
+      
+          if(err){
+              return res.status(400).send(err)
+                 }
+          else {
+             console.log("controller");
+             
+              return res.status(200).send(data)
+               }
+      })
+      }
+      }

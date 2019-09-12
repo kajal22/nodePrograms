@@ -30,5 +30,6 @@ router.post('/resetPassword',tokenVerify.verifyToken,control.resetControl)
 //to get all data from database
 router.get('/getUserData',control.getListDataControl)
 router.post('/chatAppDetail',chatControl.chatAppControl)
+router.get('/getChatDetails',chatControl.getChatControl)
 
 module.exports=router

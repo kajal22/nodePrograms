@@ -35,6 +35,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         .state('dashboard', {
             url: '/dashboard',
             templateUrl: 'templates/dashboard.html',
+            controller: 'chatControl'
         })   
     $urlRouterProvider.otherwise('/login');
 }])

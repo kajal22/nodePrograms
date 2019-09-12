@@ -211,6 +211,7 @@ exports.loginControl=(req,res)=>{
                }
         else {
            console.log("controller");
+           console.log(data)
            
             return res.status(200).send(data)
              }
