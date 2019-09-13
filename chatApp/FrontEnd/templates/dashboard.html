@@ -21,15 +21,53 @@
       
             <div class="column1" >
           <h2>ALL USERS LIST</h2>
-          <div  ng-repeat="x in getUserData">
-           <ul><button>{{x.firstName}}</button></ul> 
-            </div>
+          <div  ng-repeat="user in getUserData">   
+           <ul><button ng-click="getMessage(user)" class="buttn">{{user.firstName}} </button></ul>  
+
+
+         </div>
         </div>
 
+        
            <div class="column2">
            <h2>COMMUNICATIONS</h2>
+              <div  ng-repeat="message in getMessage">  
+                <label ng-click="getMessage()">{{message.message}} </label>         
+              </div>
            </div>
       
 
 </body> 
 </html>             
+
+
+
+
+
+
+
+<!-- 
+
+
+//here give database connectivity
+mongoose.connect(process.env.mongodbUrl, { useNewUrlParser: true }, (err) => {
+    if (err) {
+        console.log("Connection failed because " + err);
+    } else {
+        console.log("MongoDB database connection established successfully");
+    }
+
+})
+// connectivity to server
+const server=app.listen(process.env.PORT, () => {
+    console.log("Server is running on Port: ",process.env.PORT);
+});
+
+const io=socketIO(server);
+
+io.on('connection',(socket)=>{
+    console.log("Scoket connected");
+
+
+    
+}) -->

@@ -21,34 +21,40 @@ let validator=require('express-validator')
 app.use(validator())  
 const bodyParser = require('body-parser');
 
-// const dbconfig=require('../BackEnd/config/database')
+ const dbconfig=require('../BackEnd/config/database')
 let mongoose = require('mongoose');
 let routes=require('../BackEnd/routes/routes')
-
+ const socketIO=require('socket.io')
 //port number
-const PORT = 4000;
+// const PORT = 4000;
 
 app.use(express.static('../FrontEnd'));
-
-app.use(bodyParser.json());   
-               
+app.use(bodyParser.json());                 
 app.use('/',routes)
+require('dotenv').config()
+let PORT=process.env.PORT
 
 //here give database connectivity
-mongoose.connect('mongodb://127.0.0.1:27017/chatApp', { useNewUrlParser: true },(err)=>{
-    if(err)
-    {
-        console.log("not connected");
-        
-    }else{
-        console.log("succussfully connected!!!");
-        
+mongoose.connect(dbconfig.url, { useNewUrlParser: true }, (err) => {
+    if (err) {
+        console.log("Connection failed  " + err);
+    } else {
+        console.log(" database successfully connected !!!!");
     }
-});
+
+})
+
 
 
  // prints the server run or not
-app.listen(PORT, function() {
+const server=app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
 });
 
+const io=socketIO(server);
+
+io.on('connection',(socket)=>{
+    console.log("Socket connected succesfully!! ");
+
+    
+})

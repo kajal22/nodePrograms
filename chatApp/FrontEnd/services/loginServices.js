@@ -18,10 +18,11 @@ app.service('serviceLogin', function ($http, $location) {
                 console.log(response.data.data)
                 console.log("login Successfully!!")
                 localStorage.setItem('token',response.data.data.token)
-
+                localStorage.setItem("id",response.data.data._id)
+                localStorage.setItem("firstName",response.data.data.firstName)
+                
                 $location.path('/dashboard');
 
-               
             },
             
         );

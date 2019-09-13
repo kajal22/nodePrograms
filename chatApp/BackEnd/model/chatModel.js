@@ -7,7 +7,7 @@ const mongoose =require('mongoose')
 let chatAppSchema= mongoose.Schema({
    
     senderId : {
-        type:Number,
+        type:String,
         require:[true,"id should be number"]
     },
     senderName : {
@@ -16,7 +16,7 @@ let chatAppSchema= mongoose.Schema({
     },
     
     recieverId : {
-        type:Number,
+        type:String,
         require:[true,"id should be number"]
     },
     recieverName : {

@@ -2,13 +2,32 @@
 
 app.controller('chatControl', function ($scope,chatService) {
 
-    console.log(" chat controllrer called ");
+ 
     
-     $scope.getUserData = function(){
-         
+      $scope.getUserData = function(){
+       
         }
-        chatService.chatServiceUser($scope);
-        // $scope.getUserData()
-        // console.log($scope.getUserData)
+        chatService.chatServiceUser($scope);  
+
+
+
+        /*****GET MESSAGE****/
+        $scope.getMessage = function(user){
+            const messageArray=[]
+            const message=""
+            console.log("userdata",user.firstName)
+             
+              $scope.user=localStorage.getItem('recieverId')
+             console.log("hhhh")
+           
+    if((localStorage.getItem('recieverId')==message.senderId) || (localStorage.getItem('recieverId')==message.recieverId))
+       $scope.messageArray=message;
+       console.log( $scope.messageArray)
+            chatService.getMessageUser($scope);
+          }
+    
+      
+
+       
      
 });

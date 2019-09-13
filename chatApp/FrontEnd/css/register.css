@@ -1,5 +1,5 @@
 body {
-    background-color:mediumslateblue;
+    background-color:lightcoral;
     text-align: center
   }
   h1 {
@@ -17,7 +17,7 @@ body {
       padding: 16px;
       width: 25%;
       height: 80%;
-      background-color:rgb(240, 240, 13);
+      background-color:lightgray;
       position: absolute;
       left: 35%
       
@@ -27,8 +27,8 @@ body {
   
     padding: 16px;
     width: 25%;
-    height: 35%;
-    background-color:lightgoldenrodyellow;
+    height: 60%;
+    background-color:rgb(189, 207, 214);
     position: absolute;
     left: 35%
     
@@ -37,8 +37,8 @@ body {
   
       padding: 16px;
       width: 25%;
-      height: 30%;
-      background-color:lightgoldenrodyellow;
+      height: 50%;
+      background-color:skyblue;
       position: absolute;
       left: 35%
       
@@ -48,7 +48,7 @@ body {
         padding: 16px;
         width: 25%;
         height: 50%;
-        background-color:lightgoldenrodyellow;
+        background-color:lightskyblue;
         position: absolute;
         left: 35%
       
@@ -57,7 +57,7 @@ body {
         .signup{
           width: 40%;
           height: 50%;
-          background-color:green;
+          background-color:rgb(18, 168, 18);
         }
         
         .send{
@@ -102,18 +102,7 @@ body {
       li a:hover {
       background-color: #111;
       }
-      footer { 
-          width: 100%; 
-          bottom: 0px; 
-          background-color: #000; 
-          color: #fff; 
-          position: absolute; 
-          padding-top:20px; 
-          padding-bottom:50px; 
-          text-align:center; 
-          font-size:30px; 
-          font-weight:bold; 
-      } 
+      
       .body_sec { 
           margin-left:20px; 
       } 
@@ -134,14 +123,25 @@ background-color: bisque;
 .column1 {
 overflow: scroll;
 float: left;
-width: 40%;
-
+width: 30%;
+text-align: left;
 height: 800px;
 background-color:greenyellow;
 
 }
 
 
+.buttn {
+  height: 50px;
+  width: 200px;
+  }
 
 
-
+  .button {
+    height: 30px;
+    width: 300px;
+    background-color:green;
+    text-decoration-color: black
+    }
+  
+  
