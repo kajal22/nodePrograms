@@ -1,7 +1,7 @@
 const express = require('express')
 const chatService=require('../services/chatService')
 
-exports.chatAppControl=(req,res)=>{
+exports.chatAppControl=(req)=>{
   
   
     
@@ -19,11 +19,11 @@ exports.chatAppControl=(req,res)=>{
     chatService.chatAppService(chatData,(err,data)=>{
     
         if(err){
-            return res.status(400).send(err)
+            return (err)
         }
         else{
            
-            return res.status(200).send(data)
+            return (data)
         }
     })
     }

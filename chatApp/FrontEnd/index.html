@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html ng-app="chatApp">
+  <!DOCTYPE html>
+<html >
 
 <head>
     <meta charset="UTF-8">
     <script src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-socket-io/0.7.0/socket.min.js"></script>
     <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-socket-io/0.7.0/socket.min.js"></script>
+    
     <link rel="stylesheet" type="text/css" href="css/register.css">
 
-    <script src="app.js" type="text/javascript"></script>
-
-
-   
+    <script src="app.js" type="text/javascript"></script>   
 
     <script src="controller/loginControl.js"></script>
     <script src="controller/registerControl.js"  ></script>
@@ -20,25 +19,23 @@
     <script src="controller/createNewcontrol.js"  ></script>
     <script src ="controller/chatControl.js"></script>
 
-
     <script src="services/loginServices.js"></script>
     <script src="services/registerServices.js"  ></script>
     <script src="services/forgetServices.js"  ></script>
     <script src="services/newpassServices.js"  ></script>
     <script src ="services/chatService.js"></script>
     
-    <script></script>
-        var socket= io()
-   </script>
+    <script>
+        var socket = io();
+        </script>
 </head>
 
-<body>
-
-
-    <ui-view>
-
-    </ui-view>
-
+<body ng-app="chatApp">
+   
+    <ui-view></ui-view>
 </body>
 
 </html>
+
+
+

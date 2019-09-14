@@ -40,12 +40,14 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.otherwise('/login');
 
     /******/
+
+}])
+
 app.service('SocketService', ['socketFactory', function SocketService(socketFactory) {
     return socketFactory({
     ioSocket: io.connect('http://localhost:4000')
     });
     }]);
-}])
 
 
 

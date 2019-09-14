@@ -17,10 +17,14 @@ app.service('serviceLogin', function ($http, $location) {
                 console.log("login successful at servicelogin in client side");
                 console.log(response.data.data)
                 console.log("login Successfully!!")
+                //token,firstname and id stored locally which is created in model of loginobject newone
+
                 localStorage.setItem('token',response.data.data.token)
-                localStorage.setItem("id",response.data.data._id)
-                localStorage.setItem("firstName",response.data.data.firstName)
+                localStorage.setItem('loginId',response.data.data.userId)
+                localStorage.setItem('loginName',response.data.data.name)
                 
+
+    
                 $location.path('/dashboard');
 
             },
