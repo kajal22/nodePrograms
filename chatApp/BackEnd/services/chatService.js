@@ -2,9 +2,8 @@
 const chatModel=require('../model/chatModel')
 
 exports.chatAppService=(chatData,callback)=>{
-    console.log("service")
-    chatModel.chatAppModel(chatData,(err,data)=>{
 
+    chatModel.chatAppModel(chatData,(err,data)=>{
     if(err)
     {
    return callback(err)

@@ -39,7 +39,6 @@ console.log("model");
 
 
     let appUser=new chatModel({
-
         senderId :chatData.senderId ,
         senderName:chatData.senderName,
         recieverId :chatData.recieverId,

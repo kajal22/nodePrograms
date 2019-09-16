@@ -1,58 +1,50 @@
 const express = require('express')
 const chatService=require('../services/chatService')
 
-exports.chatAppControl=(req)=>{
+exports.chatAppControl=(req,callback)=>{
   
   
     
       console.log("control")
       let chatData={
-        senderId:req.body.senderId,
-        senderName:req.body.senderName,
-        recieverId:req.body.recieverId,
-        recieverName:req.body.recieverName,
-        message:req.body.message
+        senderId:req.senderId,
+        senderName:req.senderName,
+        recieverId:req.recieverId,
+        recieverName:req.recieverName,
+        message:req.message
       }
-    
     
     // the userdata will send to services
     chatService.chatAppService(chatData,(err,data)=>{
     
         if(err){
-            return (err)
+            return callback(err)
         }
         else{
            
-            return (data)
+            return callback(null,data)
         }
     })
     }
     
+
+
+
+
+
 /*************/
     exports.getChatControl=(req,res)=>{
-      let error= req.validationErrors()
     
-      
-      if(error)
-      {
-          return res.status(422).send(error)
-      }
-      else 
-      {
-  
-       console.log(" in controlller");
-      
-      // the userdata will send to services
       chatService.getChatService((err,data)=>{
       
           if(err){
-              return res.status(400).send(err)
+            return res.status(400).send(err)
                  }
           else {
              console.log("controller");
              
-              return res.status(200).send(data)
+             return res.status(200).send(data)
                }
       })
-      }
-      }
+      
+    }

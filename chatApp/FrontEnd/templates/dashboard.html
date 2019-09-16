@@ -1,49 +1,42 @@
 
-      
-    <!-- Header Section -->
-    <header> 
-            <div class="head1">welcome to the chat App</div> 
-        </header> 
-          
-        <!-- Menu Navigation Bar -->
-         
-               <div class="menu"> 
-                <a href="#logout ">LOGOUT</a>
-                </div> 
-           
-          
-                <div class="column1" >
-              <h2>ALL USERS LIST</h2>
-              <div  ng-repeat="x in getUserData">   
-               <ul><button ng-click="getMessage(x)" class="buttn">{{x.firstName}} </button></ul>  
-             </div>
-            </div>
+ 
             
-    
-               <div class="column2">
-               <h2>COMMUNICATIONS</h2>
-                  <div  ng-repeat="x in allMessage">
-                         <button class="sendText" ng-if="senderId == x.loginId && receiverId == x.recieverId"><b></b>{{x.message}}</span>
-                        <button class="receiveText" ng-if="receiverId == x.loginId && senderId == x.recieverId"><b></b>{{x.message}}</span>   
-                        <br><br>   
-                           
-                  </div>
-               </div>
-    
-    
-               <div class="textMessage">
-                <input type="text" placeholder="Enter text here" ng-model="message">
-                <input type="button" class="send" >send</input>
-             </div>  
-    
-           
+             <div class="head1">welcome to the chat App</div> 
+             <h1>user: {{loginName}}</h1>
+                 <div class="logout"> 
+                 <a href="#logout "ui-sref="login">LOGOUT</a>
+                 </div> 
+            
+      
+                 <div class="column1" >
+
+               <h2>ALL USERS LIST</h2>
+              
+               <div  ng-repeat="x in getUserData">   
+                <ul><button class="buttn" ng-click="getMessage(x)">{{x.firstName}} </button></ul>  
+              </div>
+             </div>
              
-               
-    
-    
-    
-    
-    
-    
-    
-    
+     
+                <div class="column2">
+                <h2>COMMUNICATIONS</h2>
+ 
+                 <h3 class="name">{{receiverName}}</h3><br>
+                   <div  ng-repeat="x in allMessage">
+
+                          <button class="sendText" ng-if="loginId == x.senderId && receiverId == x.recieverId"><b></b>{{x.message}}</span>
+                         <button class="receiveText" ng-if="receiverId == x.senderId && loginId == x.recieverId"><b></b>{{x.message}}</span>   
+                         <br><br><br>
+                            
+                   </div>
+                </div>
+     
+ 
+     
+                <div class="textMessage">
+                 <input type="text" placeholder="Enter text here" ng-model="message">
+              </div>  
+ 
+            <div>
+             <span><button class="sendMessage"  ng-click="sendMessage()">send</button></span>
+          </div>

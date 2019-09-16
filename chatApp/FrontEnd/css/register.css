@@ -1,17 +1,27 @@
 body {
-  background-image: url('../asserts/img.jpg');
-    text-align: center
+  background-image: url('../asserts/bg2.jpg');
+    text-align: center;    
+          margin: 0 auto; 
+          background-position:center; 
+          background-size: contain 
+     
+    
   }
-  h1 {
-    color: red;
+  
+  
+  .head1 {
+    
+          font-size:40px; 
+          color:blue; 
+          font-weight:bold
      }
   input[type=email], input[type=password] {
     width: 60%;
     padding: 2px;
-    margin: 10px;
-    
-    
+    margin: 10px
+      
     }
+	
     .register{
   
       padding: 16px;
@@ -20,11 +30,10 @@ body {
       background-color:lightgray;
       position: absolute;
       left: 35%
-      
       }
 
 .login{
-  
+  background-image: url('../asserts/login.jpg');
     padding: 16px;
     width: 25%;
     height: 60%;
@@ -60,74 +69,57 @@ body {
           background-color:rgb(18, 168, 18);
         }
         
+		
         .send{
           width: 40%;
           height: 50%;
           background-color:green;
         }
 
-        .head1 { 
-          font-size:40px; 
-          color:snow; 
-          font-weight:bold; 
-      } 
+       
       
-      body { 
-          margin: 0 auto; 
-          background-position:center; 
-          background-size: contain; 
-      } 
-    
-      .menu {    
-          
-          top: 0; 
-          background-color:green; 
-          padding:10px 0px 10px 0px; 
-          color:blue;        
-          right: auto; 
-          float: right; 
-      } 
-      .menu a { 
-          float: left; 
-          color: white; 
-          text-align: center; 
-          padding: 14px 16px; 
-          text-decoration: none; 
-          font-size: 20px; 
-      } 
-      
-         
-          
-      
-      li a:hover {
-      background-color: #111;
-      }
-      
-      .body_sec { 
-          margin-left:20px; 
-      } 
-      * {
-box-sizing: border-box;
-}
 
-.column2 {
-overflow: scroll;
-float: right;
-width: 60%;
-height: 600px; 
-background-color: bisque;
-border-radius: 30px;
-
+      .logout{
+  position: absolute;
+  top: 0%;
+  left: 87%;
+  height: 15;
+  width: 9%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  background-color: green;
+  border-radius: 30px
 
 }
-.column1 {
-overflow: scroll;
-float: left;
-width: 30%;
-text-align: left;
-height: 800px;
-background-color:bisque;
+      
+              
+ .column1 {
+	background-color:lightcyan;
+height: 400px;
+    width: 250px;
+    position: absolute;
+    top: 20%;
+    overflow:scroll;
+    padding-top: 30px;
+  
+    padding :10px 15px 20px 30px;
 
+}
+
+
+.column2{
+  background-image: url('../asserts/messagess.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 350px;
+  width: 810px;
+  position: absolute;
+  left: 30%;
+  top: 20%;
+  overflow: auto;
+  background-color:grey;
+  padding :10px 15px 10px 10px;
+  border-radius: 30px;
 }
 
 
@@ -143,21 +135,36 @@ background-color:bisque;
     background-color:green;
     text-decoration-color: black
     }
-  
-    .textMessage{
-      height: 10px;
-    width: 100px;
-    background-color:green;
 
-    }
-    .sendText{
-      position: absolute;
-      right: 200px;
-    }
-    
-    .receiveText{
-      position: absolute;
-      left: 100px;
-    }
+.textMessage{
+  position: absolute;
+  left: 30%;
+  top: 73%;
+  width: 60%;
+  padding: 12px 15px;
+  margin: 8px 0;
 
+}  
   
+  
+   .sendMessage{
+  position: absolute;
+  font-size: 20px;
+  color:black;
+  right: 25%;
+  top: 73%;
+ padding: 10px 5px;
+ background-color:green
+}
+
+.sendText{
+  position: fixed;
+  right: 10%;
+  color:black
+}
+
+.receiveText{
+  position: fixed;
+  left: 30%;
+  color:black
+}

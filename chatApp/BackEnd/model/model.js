@@ -77,9 +77,7 @@ exports.registrationModel=(userData,callback)=>{
         }
         else if(data.length> 0) 
         {   
-            console.log("\n\n\n\t\t\tNEW USER REGISTERED SUCCESFULLY !!!!   ");
-            
-            
+            console.log("\n\n\n\t\t\tNEW USER REGISTERED SUCCESFULLY !!!!   ")
             callback(null,"new user entered")
         }
     })
@@ -208,7 +206,7 @@ exports.resetModel=(resetdata,callback)=>{
             /*****modified****/
     
             exports.getListDataModel=(callback)=>{ 
-                model.find({},(err,userData) =>{
+                model.find({},['_id','firstName'],(err,userData) =>{
                     if(err)
                     {
                     return callback(err)
