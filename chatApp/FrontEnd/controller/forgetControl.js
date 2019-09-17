@@ -8,7 +8,7 @@ app.controller('forgetCtrl',function($scope,forgetService){
         
     }
     console.log("login data",forgetData);
-    forgetService.forgetServiceUser(forgetData)
+    forgetService.forgetServiceUser(forgetData,$scope)
     } 
 
   

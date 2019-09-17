@@ -6,29 +6,41 @@ app.service('serviceLogin', function ($http, $location) {
 
         console.log("data on login service---", data);
         $http
-        ({
-            method: 'POST',
-            url: 'http://localhost:4000/login',
-            data: data
-        }).then(
+            ({
+                method: 'POST',
+                url: 'http://localhost:4000/login',
+                data: data
 
-            function (response) {
+            }).then(function (response) {
 
-                console.log("login successful at servicelogin in client side");
-                console.log(response.data.data)
-                console.log("login Successfully!!")
-                //token,firstname and id stored locally which is created in model of loginobject newone
+                if (response.data.content == false) {
+                    console.log("login failed");
+                    console.log(response);
+                    alert("Login failed !!")
+                }
+                else {
 
-                localStorage.setItem('token',response.data.data.token)
-                localStorage.setItem('loginId',response.data.data.userId)
-                localStorage.setItem('loginName',response.data.data.name)
-                
+                    //token,firstname and id stored locally which is created in model of loginobject newone
+                    localStorage.setItem('token', response.data.content.token)
+                    localStorage.setItem('loginId', response.data.content.userId)
+                    localStorage.setItem('loginName', response.data.content.name)
 
-    
-                $location.path('/dashboard');
+                    console.log("login successfully");
+                    console.log(response);
+                    alert("login done Successfully...")
 
-            },
-            
-        );
+                    $location.path('/dashboard');
+
+                }
+            }).catch(function (error) {
+                $scope.registration = function () {
+                    alert("login failed...")
+                }
+                console.log("login failed..in catch", error)
+            });
+
     }
+
+
+
 });

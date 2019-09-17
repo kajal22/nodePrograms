@@ -7,19 +7,17 @@ app.service("newpasswordService", function ($http, $location) {
                 data: data
             }).then(
                 function (response) {
-                    console.log("created successfully");
-                    console.log(response);
-
-                    $scope.resetPassword = function () {
-                        alert(" done Successfully...")
-                        $location.path('/#/login')
-                    }
-                    $location.path('/resetPassword');
+                    console.log("created password successfully");
+                    console.log(response)
+                    alert(" reset password Successfully...")
+                    $location.path('/#/login')
+                    
+             
                 }).catch(function (error) {
                     $scope.resetPassword = function () {
                         alert(" failed...")
                     }
-                    console.log(" failed..", error)
+        
                 });
     }
 });

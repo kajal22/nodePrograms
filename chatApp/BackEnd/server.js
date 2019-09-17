@@ -23,7 +23,7 @@ const bodyParser = require('body-parser');
 const chatControl = require('../BackEnd/controller/chatController')
 const dbconfig = require('../BackEnd/config/database')
 let mongoose = require('mongoose');
-let routes = require('../BackEnd/routes/routes')
+let routes = require('../BackEnd/routes/userRoutes')
 const socketIO = require('socket.io')
 
 // const PORT = 4000;

@@ -4,7 +4,7 @@
 app.controller('chatControl', function ($scope, chatService, SocketService) {
 
   console.log("chat control here")
-  $scope.messageResult=true;
+  $scope.messageResult = true;
 
   $scope.allMessage = [];
 
@@ -53,29 +53,39 @@ app.controller('chatControl', function ($scope, chatService, SocketService) {
       "message": $scope.message
     }
 
-   
-      SocketService.emit("messageStore", sendObject)
-      console.log("====>msgobject", sendObject)
 
-      if($scope.messageResult)
-      {
-        $scope.messageResult=false;
-        console.log("AFTER SAVE MESSAGE");
-        
+    SocketService.emit("messageStore", sendObject)
+    try{
+    console.log("msgobject", sendObject)
+
+    if ($scope.messageResult) {
+      $scope.messageResult = false;
+      console.log("AFTER SAVE MESSAGE");
+
       SocketService.on("messageResponse", (message) => {
-  
+
         if (localStorage.getItem('loginId') == message.senderId || localStorage.getItem('receiverId') == message.receiverId) {
-          if ($scope.allMessage == undefined)
+
+          if ($scope.allMessage == undefined) {
             $scope.allMessage = message
+            console.log('$scope.allMessage is undefined');
+
+          } else {
+            console.log('$scope.allMessage is found');
+            $scope.allMessage.push(message)
+          }
+
         }
-        else
-           console.log("update message");
-          $scope.allMessage.push(message)
+
       })
-  
-      $scope.allMessage.push(sendObject)
+
+      // $scope.allMessage.push(sendObject)
     }
-    }
-   
+  }catch(e)
+  {
+    console.log(e)
+  }
+  }
+
 
 });

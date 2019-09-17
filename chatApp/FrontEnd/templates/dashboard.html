@@ -24,10 +24,11 @@
                  <h3 class="name">{{receiverName}}</h3><br>
                    <div  ng-repeat="x in allMessage">
 
-                          <button class="sendText" ng-if="loginId == x.senderId && receiverId == x.recieverId"><b></b>{{x.message}}</span>
-                         <button class="receiveText" ng-if="receiverId == x.senderId && loginId == x.recieverId"><b></b>{{x.message}}</span>   
-                         <br><br><br>
+                          <label class="sendText" ng-if="loginId == x.senderId && receiverId == x.recieverId"><b></b>{{x.message}}</label>
+                         <label class="receiveText" ng-if="receiverId == x.senderId && loginId == x.recieverId"><b></b>{{x.message}}</label>
+                         <br><br> <br><br>
                             
+            
                    </div>
                 </div>
      

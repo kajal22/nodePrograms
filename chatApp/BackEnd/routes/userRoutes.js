@@ -14,15 +14,15 @@
 const express = require('express')
 const router =express.Router()
 const tokenVerify=require('../../middleWare/tokengenrate')
-const control=require('../controller/controller')
+const control=require('../controller/userController')
 const chatControl=require('../controller/chatController')
-
 
 
 router.post('/registration',control.registrationControl)
 router.post('/login',control.loginControl)
 router.post('/forgetPassword',control.forgetControl)
 router.post('/resetPassword',tokenVerify.verifyToken,control.resetControl)
+
 
 
 /***********modified*******/

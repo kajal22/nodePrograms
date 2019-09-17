@@ -1,25 +1,25 @@
+
 <form>
 
   <div class="login">
     <h1>LOGIN </h1>
     <div>
       <label><b>E-mail-id</b></label>
-      <input type="email" placeholder="E-mail" ng-model="email"><br><br>
+     <input type="text" placeholder="E-mail" ng-keyup="emailValidation(email)" ng-model="email"><br><br>
+     
     </div>
- <!-- <form name="personForm" novalidate ng-submit="personForm.$valid &&sendForm()">
-          <input type="text" name="email" ng-model="txtmail" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required />
-          <span style="color:Red" ng-show="personForm.email.$error.required"> Required! </span>
-          <span style="color:Red" ng-show="personForm.email.$dirty&&personForm.email.$error.pattern">Please Enter Valid Email</span>
-          <br /><br/> -->
+ 
     <div>
       <label><b>Password</b></label>
-      <input type="password" placeholder="Password" ng-model="password" ><br><br>
+      <input type="password" placeholder="Password" ng-model="password"><br><br>
     </div>
+
+
     <div>
       <button type="submit" ui-sref='registration' class=button>register</button><br><br>
       <button type="submit" ui-sref='forgetPassword()' class="button">forget password</button><br><br>
       <button type="submit" ng-click='login()' class="button">LOGIN</button>
-     
+    
     </div>
   </div>
 </form>
