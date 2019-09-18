@@ -4,16 +4,18 @@
   <div class="login">
     <h1>LOGIN </h1>
     <div>
-      <label><b>E-mail-id</b></label>
-     <input type="text" placeholder="E-mail" ng-keyup="emailValidation(email)" ng-model="email"><br><br>
-     
+      <label><b>E-mail-id</b></label><br>
+     <input type="text" placeholder="E-mail"  ng-model="email" ng-keyup="emailValidation(email)"><br><br>
+     <span ng-show ="emailVal" style="color: red">should be in email format</span>
     </div>
  
+
     <div>
-      <label><b>Password</b></label>
+      <label><b>Password</b></label><br>
       <input type="password" placeholder="Password" ng-model="password"><br><br>
     </div>
 
+    
 
     <div>
       <button type="submit" ui-sref='registration' class=button>register</button><br><br>

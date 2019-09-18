@@ -11,6 +11,8 @@ app.service('chatService', function ($http, $location) {
             }).then(
                 function (response) {
                     $scope.getUserData = response.data
+                    $scope.loginUser=localStorage.getItem('loginId')
+                    
                     console.log($scope.getUserData);
 
 

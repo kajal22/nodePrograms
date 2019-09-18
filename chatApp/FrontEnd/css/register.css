@@ -1,14 +1,14 @@
 body {
-  background-image: url('../assets/body2.jpg');
+  background-image: url('../assets/bg2.jpg');
           text-align: center;    
           background-position:center; 
-      
+          
   }
   
   
   .head1 { 
           font-size:40px; 
-          color:blue; 
+          color:rgb(100, 16, 16); 
           font-weight:bold
      }
   input[type=email], input[type=password] {
@@ -29,7 +29,8 @@ body {
       }
 
 .login{
-  background-color:lightgreen;
+  background-image: url('../assets/login2.jpg');
+  /* background-color:lightgreen; */
     padding: 16px;
     width: 25%;
     height: auto;
@@ -37,24 +38,23 @@ body {
     left: 35%
     }
    .forget{
-  
+    background-image: url('../assets/login2.jpg');
       padding: 16px;
       width: 25%;
-      height: 45%;
-      background-color:skyblue;
+      height: auto;
       position: absolute;
       left: 35%
       
       }
       .createNew{
-  
+        
+        background-image: url('../assets/login2.jpg');
         padding: 16px;
         width: 25%;
         height: auto;
-        background-color:lightskyblue;
+      
         position: absolute;
         left: 35%
-      
         }
 
         .signup{
@@ -73,7 +73,7 @@ body {
        
       
 
-      .logout{
+  .logout{
   position: absolute;
   top: 0%;
   left: 87%;
@@ -87,22 +87,21 @@ body {
 }
       
               
- .column1 {
-	background-color:lightcyan;
-height: 400px;
+    .column1 {
+    background-image: url('../assets/login2.jpg');
+    height: 400px;
     width: 250px;
     position: absolute;
     top: 20%;
     overflow:scroll;
     padding-top: 30px;
-  
     padding :10px 15px 20px 30px;
 
 }
 
 
-.column2{
- background-color: royalblue;
+  .column2{
+  background-image: url('../assets/login2.jpg');
   background-size: cover;
   height: 350px;
   width: 810px;
@@ -115,9 +114,10 @@ height: 400px;
 }
 
 
-.buttn {
+ .buttn {
   height: 50px;
   width: 200px;
+  background-color: lightpink
   }
 
 
@@ -131,20 +131,20 @@ height: 400px;
 .textMessage{
   position: absolute;
   left: 30%;
-  top: 75%;
+  top: 77%;
   width: 60%;
   padding: 12px 15px;
-  margin: 8px 0;
-
+  margin:8px 0;
 }  
   
   
-   .sendMessage{
+  .sendMessage{
   position: absolute;
   font-size: 20px;
+  width: 5%;
   color:black;
   right: 25%;
-  top: 75%;
+  top: 78%;
  padding: 10px 5px;
  background-color:green
 }
@@ -152,7 +152,7 @@ height: 400px;
 .sendText{
  
   border: 1px solid black;
-  background-color:gainsboro;
+  background-color:lightblue;
 position: absolute;
 right:10%;
 -webkit-border-radius: 10px;
@@ -166,7 +166,7 @@ padding: 10px 10px 10px 10px;
 .receiveText{
   
   border: 1px solid black;
-background-color:rgb(147, 152, 158);
+background-color:lightseagreen;
 position: absolute;
 left:10%;
 -webkit-border-radius: 10px;

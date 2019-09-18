@@ -14,7 +14,8 @@
 
     <div>
       <label><b>E-mail-id</b></label><br>
-      <input type="email" placeholder="E-mail" ng-model="email"><br><br>
+      <input type="text" placeholder="E-mail"  ng-model="email" ng-keyup="emailValidation(email)"><br><br>
+      <span ng-show ="emailVal" style="color: red">should be in email format</span>
     </div>
 
     <div>

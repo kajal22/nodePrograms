@@ -9,7 +9,6 @@ app.controller('chatControl', function ($scope, chatService, SocketService) {
   $scope.allMessage = [];
 
   $scope.getUserData = function () {
-    console.log("hii")
     $scope.loginName = localStorage.getItem('loginName')
     $scope.loginId = localStorage.getItem('loginId')
     // console.log("login name ",$scope.loginName);

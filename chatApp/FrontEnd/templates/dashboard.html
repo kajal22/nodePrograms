@@ -7,13 +7,13 @@
                  <a href="#logout "ui-sref="login">LOGOUT</a>
                  </div> 
             
-      
+  
                  <div class="column1" >
 
                <h2>ALL USERS LIST</h2>
               
                <div  ng-repeat="x in getUserData">   
-                <ul><button class="buttn" ng-click="getMessage(x)">{{x.firstName}} </button></ul>  
+                <ul><button class="buttn" ng-click="getMessage(x)" ng-show="loginUser!=x._id">{{x.firstName}} </button></ul>  
               </div>
              </div>
              

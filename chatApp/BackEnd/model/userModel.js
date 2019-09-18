@@ -14,8 +14,8 @@
 
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose')
-let tokenGenrator = require('../../middleWare/tokengenrate')
-let nodeMail = require('../../middleWare/nodemailer')
+let tokenGenrator = require('../middleWare/tokengenrate')
+let nodeMail = require('../middleWare/nodemailer')
 
 
 const Schema = mongoose.Schema;

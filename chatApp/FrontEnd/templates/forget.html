@@ -2,11 +2,12 @@
   <div class=forget>
     <h1>FORGET PASSWORD</h1>
     <div>
-      <label><b>email-id</b></label><br>
-      <input type="email" placeholder="E-mail" ng-model="email"><br><br>
-    </div>
+    <label><b>E-mail-id</b></label>
+    <input type="text" placeholder="E-mail"  ng-model="email" ng-keyup="emailValidation(email)"><br>
+    <span ng-show ="emailVal" style="color: red">should be in email format</span><br>
+   </div>
+
     <div>
-     
       <button type="submit" ng-click='forgetPassword()' class="send">send</button>
     </div>
 

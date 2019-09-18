@@ -13,7 +13,7 @@
 
 const express = require('express')
 const router =express.Router()
-const tokenVerify=require('../../middleWare/tokengenrate')
+const tokenVerify=require('../middleWare/tokengenrate')
 const control=require('../controller/userController')
 const chatControl=require('../controller/chatController')
 

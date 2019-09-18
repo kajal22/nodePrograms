@@ -177,9 +177,12 @@ resetControl  (req, res) {
         let error = req.validationErrors()
         let response = {}
 
-        if (error) {
+        if(error) {
             response.success = false
-            return res.status(422).send("entered invalid inputs")
+            response.message='error while validation'
+            response.error=error
+            
+            return res.status(400).send(response)
         }
         else {
 
@@ -199,11 +202,16 @@ resetControl  (req, res) {
             service.resetService(resetData, (err, data) => {
 
                 if (err) {
-                    return res.status(422).send(err)
+                    response.success=false
+                    response.message='error while validation'
+                    response.error=err
+                    return res.status(422).send(response)
                 }
                 else {
-
-                    return res.status(200).send(data)
+                    response.success=true
+                    response.message='reset password successfull!'
+                    response.content=data
+                    return res.status(200).send(response)
                 }
             })
         }
@@ -219,9 +227,9 @@ getListDataControl  (req, res)  {
     let response = {}
 
     if(error) {
-        response.success = false
-        response.message='error while validation'
+        response.success=false
         response.error=error
+        return res.status(200).send(response)
     }
         else {
 
@@ -233,16 +241,12 @@ getListDataControl  (req, res)  {
             service.getListDataService((err, data) => {
 
                 if (err) {
-                    response.success=false
-                    response.message='error while validation'
-                    response.error=err
-                    return res.status(422).send(response)
+                   
+                    return res.status(422).send(err)
                 }
                 else {
-                    response.success=true
-                    response.message='reset password successfull!'
-                    response.content=data
-                    return res.status(200).send(response)
+                   console.log(data ,"data")
+                    return res.status(200).send(data)
                 }
             })
         }
