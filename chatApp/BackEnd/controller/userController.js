@@ -140,9 +140,7 @@ forgetControl(req, res){
     else {
 
         let forgetData = {
-
             email: req.body.email,
-
         }
 
 

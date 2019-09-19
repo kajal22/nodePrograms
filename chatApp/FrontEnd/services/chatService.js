@@ -1,6 +1,8 @@
 
 app.service('chatService', function ($http, $location) {
     this.chatServiceUser = function ($scope) {
+    let loginUserToken=localStorage.getItem('token')
+if(loginUserToken){
 
 
         $http(
@@ -20,7 +22,7 @@ app.service('chatService', function ($http, $location) {
                     console.log("failed")
                 });
     }
-
+    }
 
     /***GET MESSAGE****/
 

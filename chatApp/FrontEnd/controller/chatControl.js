@@ -87,4 +87,11 @@ app.controller('chatControl', function ($scope, chatService, SocketService) {
   }
 
 
+  // to remove item after logout
+  $scope.logout=function(){
+    localStorage.removeItem('token')
+    localStorage.removeItem('receiverName')
+    localStorage.removeItem('loginId')
+    localStorage.removeItem('loginName')
+}
 });

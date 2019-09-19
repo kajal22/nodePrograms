@@ -21,7 +21,6 @@ let validator = require('express-validator')
 app.use(validator())
 const bodyParser = require('body-parser');
 const chatControl = require('../BackEnd/controller/chatController')
-const dbconfig = require('../BackEnd/config/database')
 let mongoose = require('mongoose');
 let routes = require('../BackEnd/routes/userRoutes')
 const socketIO = require('socket.io')
@@ -33,11 +32,10 @@ app.use(express.static('../FrontEnd'));
 app.use(bodyParser.json());
 app.use('/', routes)
 require('dotenv').config()
-let PORT = process.env.PORT
 
 
 //here give database connectivity
-mongoose.connect(dbconfig.url, { useNewUrlParser: true }, (err) => {
+mongoose.connect(process.env.MONGODBURL, { useNewUrlParser: true }, (err) => {
     if (err) {
         console.log("Connection failed  " + err);
     } else {
@@ -49,8 +47,8 @@ mongoose.connect(dbconfig.url, { useNewUrlParser: true }, (err) => {
 
 
 // prints the server run or not
-const server = app.listen(PORT, function () {
-    console.log("Server is running on Port: " + PORT);
+const server = app.listen(process.env.PORTNUMBER, function () {
+    console.log("Server is running on Port: " + process.env.PORTNUMBER);
 });
 
 const io = socketIO(server);

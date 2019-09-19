@@ -6,7 +6,6 @@ app.controller('controlLogin', function ($scope, serviceLogin) {
 
      //for email validation
     $scope.emailValidation = function (email) {
-
         let pattern = /^([a-zA-Z0-9_\.])+\@(([gmail\yahoo\hotmail\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         let res = email.match(pattern);
         if (res) {
@@ -28,6 +27,5 @@ app.controller('controlLogin', function ($scope, serviceLogin) {
         serviceLogin.login(data, $scope);
 
     }
-
 
 });
