@@ -15,7 +15,7 @@ chatAppControl  (req, callback)  {
       message: req.message
     }
 
-    // the userdata will send to services
+    // the userdata wasaill send to services
     chatService.chatAppService(chatData, (err, data) => {
 
       if (err) {
@@ -55,4 +55,4 @@ getChatControl (req, res)  {
 
 }
 const chatControlobject=new ChatController()
- module.exports=chatControlobject
+ module.exports=chatControlobject;

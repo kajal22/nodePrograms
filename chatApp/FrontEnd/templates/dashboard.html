@@ -2,15 +2,15 @@
  
             
              <div class="head1">welcome to the chat App</div> 
-             <h1>user: {{loginName}}</h1>
+             <h1>User: {{loginName}}</h1>
                  <div class="logout"> 
-                 <button ng-click="logout()" ui-sref="login" >LOGOUT</button>
+                 <button style="background-color: green" ng-click="logout()" ui-sref="login" >LOGOUT</button>
                  </div> 
             
   
                  <div class="column1" >
 
-               <h2>ALL USERS LIST</h2>
+               <h2 class=head2>LIST</h2>
               
                <div  ng-repeat="x in getUserData">   
                 <ul><button class="buttn" ng-click="getMessage(x)" ng-show="loginUser!=x._id">{{x.firstName}} </button></ul>  
@@ -19,7 +19,7 @@
              
      
                 <div class="column2">
-                <h2>COMMUNICATIONS</h2>
+               
  
                  <h3 class="name">{{receiverName}}</h3><br>
                    <div  ng-repeat="x in allMessage">
@@ -33,7 +33,7 @@
                 </div>
      
  
-     
+    
                 <div class="textMessage">
                  <input type="text" placeholder="Enter text here" ng-model="message">
               </div>  

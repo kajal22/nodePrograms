@@ -18,24 +18,23 @@
 const express = require('express');
 const app = express();
 let validator = require('express-validator')
-app.use(validator())
-const bodyParser = require('body-parser');
-const chatControl = require('../BackEnd/controller/chatController')
+app.use(validator())    
+const chatControl = require('./controller/chatController.js')
 let mongoose = require('mongoose');
-let routes = require('../BackEnd/routes/userRoutes')
+let routes = require('./routes/userRoutes')
 const socketIO = require('socket.io')
+const bodyParser=require('body-parser')
+ const PORT = 4000;
 
-// const PORT = 4000;
 
-
-app.use(express.static('../FrontEnd'));
+app.use(express.static('../Frontend'));
 app.use(bodyParser.json());
 app.use('/', routes)
 require('dotenv').config()
 
 
 //here give database connectivity
-mongoose.connect(process.env.MONGODBURL, { useNewUrlParser: true }, (err) => {
+mongoose.connect('mongodb://127.0.0.1:27017/chatApp', { useNewUrlParser: true }, (err) => {
     if (err) {
         console.log("Connection failed  " + err);
     } else {
@@ -47,8 +46,8 @@ mongoose.connect(process.env.MONGODBURL, { useNewUrlParser: true }, (err) => {
 
 
 // prints the server run or not
-const server = app.listen(process.env.PORTNUMBER, function () {
-    console.log("Server is running on Port: " + process.env.PORTNUMBER);
+const server = app.listen(PORT, function () {
+    console.log("Server is running on Port: " + PORT);
 });
 
 const io = socketIO(server);

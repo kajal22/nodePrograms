@@ -6,7 +6,6 @@ exports.generateToken = (payload) => {
 
     return token;
 }
-
 // verify the token
 
 

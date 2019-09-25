@@ -60,7 +60,7 @@ class Model{
 
 registrationModel (userData, callback) {
     try {
-        console.log("in register model !");
+        console.log("in register model!");
 
         model.find({ email: userData.email }, (err, data) => {
 

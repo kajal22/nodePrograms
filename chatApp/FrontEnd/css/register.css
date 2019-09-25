@@ -11,6 +11,10 @@ body {
           color:rgb(100, 16, 16); 
           font-weight:bold
      }
+     .head2{
+       font-style: oblique;
+       color: blue
+     }
   input[type=text], input[type=password] {
     width: 60%;
     height: 10%;
@@ -65,10 +69,6 @@ body {
   padding: 30px;  
   border: 10px solid black;
 
-      }
-      .frgt{
-        position: absolute;
-        left: 35%;
       }
       .createNew{
         
@@ -128,7 +128,9 @@ body {
     padding :10px 15px 20px 30px;
 
 }
-
+.name{
+  color: blue;
+}
 
   .column2{
   background-image: url('../assets/login2.jpg');
@@ -147,7 +149,7 @@ body {
  .buttn {
   height: 50px;
   width: 200px;
-  background-color: lightpink
+  background-color:lightblue
   }
 
 

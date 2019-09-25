@@ -8,7 +8,7 @@ if(loginUserToken){
         $http(
             {
                 method: 'GET',
-                url: 'http://localhost:4000/getUserData'
+                url: 'http://13.59.67.17:4000/getUserData'
 
             }).then(
                 function (response) {
@@ -30,7 +30,7 @@ if(loginUserToken){
         $http(
             {
                 method: 'GET',
-                url: 'http://localhost:4000/getChatDetails'
+                url: 'http://13.59.67.17:4000/getChatDetails'
 
             })
             .then(

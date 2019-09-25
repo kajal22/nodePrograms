@@ -3,7 +3,7 @@ app.service("newpasswordService", function ($http, $location) {
         $http(
             {
                 method: 'POST',
-                url: 'http://localhost:4000/resetPassword',
+                url: 'http://13.59.67.17:4000/resetPassword',
                 data: data
             }).then(
                 function (response) {
