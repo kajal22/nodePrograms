@@ -186,8 +186,6 @@ resetControl  (req, res) {
 
             const service = require('../services/userServices')
 
-            console.log("hello");
-
             console.log("id is " + req.body.id);
 
             // pass the id and password 

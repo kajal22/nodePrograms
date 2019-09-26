@@ -13,9 +13,10 @@
 const express = require('express')
 const router = express.Router()
 const userControl = require('../controller/userControl')
-console.log("routes")
-router.post('/registration', userControl.registrationControl)
+const utility=require('../../backEnd/utility')
+router.post('/registration',userControl.registrationControl)
 router.post('/login',userControl.loginControl)
-
+router.post('/forgetPassword',userControl.forgetPassControl)
+router.post('/resetPassword',utility.verifyToken,userControl.resetPassControl)
 
 module.exports = router

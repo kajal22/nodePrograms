@@ -21,8 +21,8 @@ class Controller {
             req.check('firstName', 'firstName should not empty').notEmpty()
             req.check('lastName', 'lastName should be string format').isAlpha()
             req.check('lastName', 'lastName should not empty').notEmpty()
-            req.check('loginType','loginType should be string').isAlpha()
-            req.check('loginType','loginType should not empty').notEmpty()
+            req.check('loginType', 'loginType should be string').isAlpha()
+            req.check('loginType', 'loginType should not empty').notEmpty()
             req.check('email', 'email should be string format').isEmail()
             req.check('email', 'lastName should not empty').notEmpty()
             req.check('password', 'password should not empty').notEmpty()
@@ -55,7 +55,7 @@ class Controller {
                         console.log("error")
                         response.success = false
                         response.message = 'email Already exist';
-                        response.error=error
+                        response.error = error
                         return res.status(400).send(response)
                     })
             }
@@ -65,13 +65,11 @@ class Controller {
     }
     //******************logincontrolller*************/
     loginControl(req, res) {
-      
+
         try {
             req.check('email', 'email should be string format').isEmail()
             req.check('email', 'lastName should not empty').notEmpty()
-            req.check('loginType','loginType should be string').isAlpha()
-            req.check('loginType','loginType should not empty').notEmpty()
-            req.check('password', 'password should not empty').notEmpty()  
+            req.check('password', 'password should not empty').notEmpty()
 
             let error = req.validationErrors()
             let response = {}
@@ -85,12 +83,11 @@ class Controller {
                 //take firstname,lastName,email and password in body
                 let loginData = {
                     "email": req.body.email,
-                    "loginType": req.body.loginType,
                     "password": req.body.password
                 }
-            
-                userService.loginService(loginData) 
-                 .then(data => {
+
+                userService.loginService(loginData)
+                    .then(data => {
                         response.success = true
                         response.message = 'LOGIN SUCESSFULLY!'
                         return res.status(200).send(response)
@@ -98,16 +95,94 @@ class Controller {
                     .catch(error => {
                         console.log("error")
                         response.success = false
-                        response.message = 'email not exist';
-                        response.error=error
+                        response.message = 'Login Failed';
+                        response.error = error
                         return res.status(400).send(response)
                     })
             }
-      }catch(err)
-      {
-          console.log(err)
-      }
-     }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    /************forgetControl*************/
+    forgetPassControl(req, res) {
+        try {
+
+            req.check('email', 'email should be string format').isEmail()
+            req.check('email', 'lastName should not empty').notEmpty()
+
+
+            let error = req.validationErrors()
+            let response = {}
+            if (error) {
+                response.success = false
+                response.message = "error while validation"
+                response.error = error
+                return res.status(400).send(response)
+            }
+            else {
+                //take firstname,lastName,email and password in body
+                let forgetData = {
+                    "email": req.body.email
+                }
+                userService.forgetPassService(forgetData)
+                    .then(data => {
+                        response.success = true
+                        response.message = 'EMAIL SENT SUCESSFULLY!'
+                        return res.status(200).send(response)
+                    })
+                    .catch(error => {
+                        console.log("error")
+                        response.success = false
+                        response.message = 'email not exist';
+                        response.error = error
+                        return res.status(400).send(response)
+                    })
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    /******************resetControl************/
+    resetPassControl(req, res) {
+        try {
+            req.check('password', 'password should not empty').notEmpty()
+            let error = req.validationErrors()
+            let response = {}
+
+            if (error) {
+                response.success = false
+                response.message = 'error while validation'
+                response.error = error
+                return res.status(400).send(response)
+            }
+            else {
+                console.log("ALL DATA", req.body.password);
+
+                let resetData = {
+                    '_id': req.body.id,
+                    'password': req.body.password
+                }
+
+                userService.resetPassService(resetData)
+                    .then(data => {
+                        response.success = true
+                        response.message = "updated successfully"
+                        response.data = data
+                        return res.status(200).send(response)
+                    })
+                    .catch(error => {
+                        response.success = false
+                        response.message = 'ERROR OCCURED';
+                        response.error = error
+                        return res.status(400).send(response)
+                    })
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
 }
 const controlObject = new Controller()
 module.exports = controlObject;
