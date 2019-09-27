@@ -1,0 +1,158 @@
+{
+"registerTest":[{
+
+    "registrationEmpty": {
+        "firstName": "kajal",
+        "lastName": "choudhary",
+        "email": " ",
+        "loginType": " ",
+        "password": " "
+    },
+    "registrationFirstNameEmpty": {
+        "firstName": " ",
+        "lastName": "choudhary",
+        "email": "kajalchoudhary705@gmail.com",
+        "loginType": "user",
+        "password": "kajal26"
+    },
+    "registrationlastNameEmpty": {
+        "firstName": "kajal",
+        "lastName": " ",
+        "email": "kajalchoudhary705@gmail.com",
+        "loginType": "user",
+        "password": "kajal26"
+    },
+    "registrationEmailEmpty": {
+        "firstName": "kajal",
+        "lastName": "choudhary",
+        "email": " ",
+        "loginType": "user",
+        "password": "kajal26"
+    },
+    "registrationEmailInvalid": {
+        "firstName": "kajal",
+        "lastName": "choudhary",
+        "email": "kajalgmail.com",
+        "loginType": "user",
+        "password": "kajal26"
+    },
+    "registrationEmailExist": {
+        "firstName": "kajal",
+        "lastName": "choudhary",
+        "email": "kajalchoudhary705@gmail.com",
+        "loginType": "user",
+        "password": "kajal12"
+    },
+    "registrationPasswordEmpty": {
+        "firstName": "kajal",
+        "lastName": "choudhary",
+        "email": " ",
+        "loginType": "user",
+        "password": " "
+    },
+
+    "registrationNameNotFormat": {
+        "firstName": "kajal",
+        "lastName": "choudhary",
+        "email": "kajalchoudhary705@gmail.com",
+        "loginType": "user",
+        "password": "kajal26"
+    },
+    "registrationPasswordExceeds": {
+        "firstName": "kajal",
+        "lastName": "choudhary",
+        "email": "kajalchoudhary705@gmail.com",
+        "loginType": "user",
+        "password": "kaaaaa123445"
+    },
+    "registrationPasswordSmall": {
+        "firstName": "kajal",
+        "lastName": "choudhary",
+        "email": "kajalchoudhary705@gmail.com",
+        "loginType": "user",
+        "password": "kajal26123456"
+    },
+    "registrationSuccessfull": {
+        "firstName": "leeja",
+        "lastName": "sharma",
+        "email": "sharma@gmail.com",
+        "loginType": "user",
+        "password": "sharma"
+    }
+
+}],
+
+
+
+
+
+    "loginTest":[{
+    
+        "loginEmpty": {
+            "email": " ",
+            "password": " "
+        },
+        "loginEmailEmpty":{
+            "email": " ",
+            "password":"kajal26"
+        },
+        "loginEmailInvalid":{
+            "email": "kajalchoudhary7@gmail.com",
+            "password":"kajal12"
+        },
+        "loginPasswordEmpty":{
+            "email": "kajalchoudhary705@gmail.com",
+            "password": " "
+       
+        },
+        "loginPasswordExceeds":{
+            "email": "kajalchoudhary705@gmail.com",
+            "password": "kajal1234455566"
+        },
+        "loginPasswordSmall":{
+            "email": "kajalchoudhary705@gmail.com",
+            "password": "ka"
+        },
+        "loginSucessfull":{
+            "email": "kajalchoudhary705@gmail.com",
+            "password": "kajal12"
+        }
+    }],
+
+    "forgetTest":[{
+    
+      
+        "forgetEmailEmpty":{
+            "email": " "
+        },
+        "forgetEmailInvalid":{
+            "email": "kajalchoudhary7@gmail.com"       
+        },
+       
+        "sentSucessfull":{
+            "email": "kajalchoudhary705@gmail.com"
+        }
+    }],
+
+
+"resetTest":[{
+    
+      
+    "resetPassEmpty":{
+        "password": " "
+    },
+    "resetPassInvalid":{
+        "password": "dkgjiork"       
+    },
+   
+    "resetSucessfull":{
+        "password": "kajal1"
+    },
+    "tokenHeader":{
+        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDhjODE3YWYxZmQ4MDc2YzRjZWIwMzAiLCJpYXQiOjE1Njk1NzkxMzQsImV4cCI6MTU2OTYwMDczNH0.1UW70MkdwBWtShCcbZmoNNC7FzrsESdX8U5aA3ocplU"
+    },
+    "emptyToken":{
+        "token":""
+    }
+}]
+}

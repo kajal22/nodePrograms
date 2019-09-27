@@ -26,6 +26,8 @@ class Controller {
             req.check('email', 'email should be string format').isEmail()
             req.check('email', 'lastName should not empty').notEmpty()
             req.check('password', 'password should not empty').notEmpty()
+            req.check('password', 'password of minimum length ').isLength({ min: 5 })
+            req.check('password', 'password of maximum length ').isLength({ max: 10 })
 
             let error = req.validationErrors()
             let response = {}
@@ -33,7 +35,7 @@ class Controller {
                 response.success = false
                 response.message = "error while validation"
                 response.error = error
-                return res.status(400).send(response)
+                return res.status(422).send(response)
             }
             else {
                 //take firstname,lastName,email and password in body
@@ -70,6 +72,8 @@ class Controller {
             req.check('email', 'email should be string format').isEmail()
             req.check('email', 'lastName should not empty').notEmpty()
             req.check('password', 'password should not empty').notEmpty()
+            req.check('password', 'password of minimum length ').isLength({ min: 5 })
+            req.check('password', 'password of maximum length ').isLength({ max: 10 })
 
             let error = req.validationErrors()
             let response = {}
@@ -77,7 +81,7 @@ class Controller {
                 response.success = false
                 response.message = "error while validation"
                 response.error = error
-                return res.status(400).send(response)
+                return res.status(422).send(response)
             }
             else {
                 //take firstname,lastName,email and password in body
@@ -118,7 +122,7 @@ class Controller {
                 response.success = false
                 response.message = "error while validation"
                 response.error = error
-                return res.status(400).send(response)
+                return res.status(422).send(response)
             }
             else {
                 //take firstname,lastName,email and password in body
@@ -132,7 +136,6 @@ class Controller {
                         return res.status(200).send(response)
                     })
                     .catch(error => {
-                        console.log("error")
                         response.success = false
                         response.message = 'email not exist';
                         response.error = error
@@ -147,6 +150,8 @@ class Controller {
     resetPassControl(req, res) {
         try {
             req.check('password', 'password should not empty').notEmpty()
+            req.check('password', 'password of minimum length ').isLength({ min: 5 })
+            req.check('password', 'password of maximum length ').isLength({ max: 10 })
             let error = req.validationErrors()
             let response = {}
 
@@ -154,7 +159,7 @@ class Controller {
                 response.success = false
                 response.message = 'error while validation'
                 response.error = error
-                return res.status(400).send(response)
+                return res.status(422).send(response)
             }
             else {
                 console.log("ALL DATA", req.body.password);

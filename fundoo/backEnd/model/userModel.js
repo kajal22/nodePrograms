@@ -23,7 +23,6 @@ let registerSchema = mongoose.Schema({
     },
     email: {
         type: String,
-
     },
     loginType: {
         type: String,
@@ -35,7 +34,6 @@ let registerSchema = mongoose.Schema({
     },
     token: {
         type: String,
-
     },
 },
     {
@@ -61,17 +59,15 @@ class UserClass {
                     }
 
                 }).catch((err) => {
-                    console.log("error in model");
-
+                    console.log("error ")
                     reject(err)
                 })
         })
     }
 
-
+    //registered users data will be saved in database
 
     registrationSaveUser(userData) {
-
         return new Promise((resolve, reject) => {
             let user = new this.newUser({
                 "firstName": userData.firstName,
@@ -93,25 +89,31 @@ class UserClass {
 
 
     /******loginmodel*********/
+
+
+    //find email that should be present in database
+
     searchEmail(findEmail) {
+        console.log("got email", findEmail);
         return new Promise((resolve, reject) => {
             this.newUser.find({ 'email': findEmail }, ['_id', 'email', 'password'])
                 .then((data) => {
-                    console.log(data, "in model")
+                    console.log("in  model", data)
                     if (data.length > 0) {
                         resolve(data)
                     } else {
                         resolve(data)
                     }
-
                 }).catch((err) => {
                     console.log("error in model");
                     reject(err)
                 })
         })
     }
-    saveToken(newToken, data) {
 
+    //save token while login in database 
+
+    saveToken(newToken, data) {
         return new Promise((resolve, reject) => {
             this.newUser.updateOne({ _id: data._id }, { $set: { token: newToken } })
                 .then(Response => {
@@ -125,16 +127,20 @@ class UserClass {
         })
     }
 
+
     /**************resetModel*************/
+
+    //replace old password by new pew hashed password set that and update in database
+
     resetPassword(id, hashedPassword) {
         return new Promise((resolve, reject) => {
             this.newUser.updateOne({ _id: id }, { $set: { password: hashedPassword } })
                 .then(data => {
-                    console.log("updated password")
+                    console.log("updated password");
                     resolve("updated password")
                 })
                 .catch(error => {
-                    console.log("error ")
+                    console.log("error")
                     reject(error)
                 })
         })

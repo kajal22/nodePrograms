@@ -22,8 +22,8 @@ app.use(express.static('../frontEnd'));
 app.use(bodyParser.json());
 app.use('/', routes)
 require('dotenv').config()
-// mongoose.connect('mongodb://127.0.0.1:27017/Fundoo', { useNewUrlParser: true }, (err) => {
-    mongoose.connect(process.env.MONGODBURL, { useNewUrlParser: true }, (err) => {
+mongoose.connect('mongodb://127.0.0.1:27017/Fundoo', { useNewUrlParser: true }, (err) => {
+    // mongoose.connect(process.env.MONGODBURL, { useNewUrlParser: true }, (err) => {
     if (err) {
         console.log("connection failed" + err)
     }
@@ -32,6 +32,11 @@ require('dotenv').config()
     }
 })
 // prints the server run or not
-const server = app.listen(process.env.PORT, function () {
-    console.log("Server is running on Port: " +process.env.PORT);
+const server = app.listen(PORT, function () {
+    console.log("Server is running on Port: " +PORT);
 });
+// const server = app.listen(process.env.PORT, function () {
+//     console.log("Server is running on Port: " +process.env.PORT);
+// });
+
+module.exports=app;

@@ -61,12 +61,14 @@ class Service {
 
     }
     /**************loginservice**************/
+//while login it compare login password and registered password by bcrypt compare if password matched
+//login successfull 
+
     loginService(loginData) {
         return new Promise((resolve, reject) => {
             userModel.searchEmail(loginData.email)
                 .then((data) => {
                     console.log(data)
-
                     if (data.length > 0) {
                         let payload = {
                             '_id': data[0]._id
@@ -103,7 +105,13 @@ class Service {
         })
     }
     /***************forgetPassword************/
+
+    // forgetPassword First it will find the email to check that email is present or not if mail found 
+    // then generate a token specifies the user's identity from token then send mail to user's mail'id through nodemailer 
+    //came from nodemailer as response email sent ...
+
     forgetPassService(forgetData) {
+        console.log(forgetData, "forgetdata");
         return new Promise((resolve, reject) => {
             userModel.searchEmail(forgetData.email)
                 .then((data) => {
@@ -112,20 +120,19 @@ class Service {
                         let payload = {
                             '_id': data[0]._id
                         }
-                        console.log("matched email")
                         let newToken = this.generateToken(payload);
                         console.log(newToken)
-                        nodemailer.sendmail(forgetData.email, newToken), (err, response) => {
-                            if (err) {
-                                console.log("error in mail");
-                                return callback(err)
-                            }
-                            else {
-                                console.log("mail sent sucessfully!!");
-                                return callback(null, response)
-                            }
-                        }
-                        resolve(data)
+                        nodemailer.sendmail(forgetData.email, newToken).then((response) => {
+                            console.log(response);
+                            console.log("mail sent sucessfully!!");
+                            console.log("RESPONSE MAIL", response);
+                            resolve(response)
+                        }).catch((err) => {
+                            reject(err)
+                        })
+
+                    } else {
+                        reject("email not registerd")
                     }
                 }).catch(error => {
                     console.log("error while sending mail")
@@ -134,24 +141,23 @@ class Service {
         })
     }
     /**********resetPassword************/
-    resetPassService(resetData) {
-        console.log("resetdataaaaaaaaaa", resetData._id);
 
+    // //new password will encrypted that store in hashedPassword passed to model
+
+    resetPassService(resetData) {
+        console.log("resetdata", resetData._id);
         let hashedPassword = this.encryptPassword(resetData.password)
-        console.log("passpssseddd", hashedPassword);
+        console.log("pass", hashedPassword);
 
         return new Promise((resolve, reject) => {
             userModel.resetPassword(resetData._id, hashedPassword)
-
                 .then(data => {
-                    console.log("inside service");
                     resolve(data)
 
                 }).catch(error => {
                     console.log("error in catch")
                     reject(error)
                 })
-
         })
     }
 }

@@ -13,8 +13,9 @@ verifyToken(req,res,next){
 
                 res.status(400).send(" Token has expired !!!")
             } else {
-                console.log(data)
+              
                 req.body.id = data._id;
+                console.log(req.body.id)
                 console.log("token got")
                 next();
             }
