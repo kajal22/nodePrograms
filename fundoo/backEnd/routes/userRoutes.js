@@ -18,5 +18,5 @@ router.post('/registration',userControl.registrationControl)
 router.post('/login',userControl.loginControl)
 router.post('/forgetPassword',userControl.forgetPassControl)
 router.post('/resetPassword',utility.verifyToken,userControl.resetPassControl)
-
+router.post('/verifyToken',utility.verifyToken,userControl.verifyTokenControl)
 module.exports = router

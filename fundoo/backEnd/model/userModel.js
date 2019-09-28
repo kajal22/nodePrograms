@@ -35,6 +35,10 @@ let registerSchema = mongoose.Schema({
     token: {
         type: String,
     },
+    isVerify: {
+        type: String,
+    },
+
 },
     {
         timestamps: true
@@ -51,15 +55,13 @@ class UserClass {
         return new Promise((resolve, reject) => {
             this.newUser.find({ 'email': findEmail }, this.newUser.email)
                 .then((data) => {
-                    console.log(data, "all data")
                     if (data.length > 0) {
-                        reject({ "message": 'email already registered' })
-                    } else {
                         resolve(data)
+                    } else {
+                        resolve()
                     }
 
                 }).catch((err) => {
-                    console.log("error ")
                     reject(err)
                 })
         })
@@ -68,6 +70,8 @@ class UserClass {
     //registered users data will be saved in database
 
     registrationSaveUser(userData) {
+        console.log(userData, "USERDATA   ");
+
         return new Promise((resolve, reject) => {
             let user = new this.newUser({
                 "firstName": userData.firstName,
@@ -78,10 +82,10 @@ class UserClass {
             });
             user.save()
                 .then(data => {
-                    resolve({ "data": data })
+                    resolve(data)
                 })
                 .catch(error => {
-                    console.log("error is")
+                    console.log("error")
                     reject(error)
                 })
         })
@@ -98,7 +102,7 @@ class UserClass {
         return new Promise((resolve, reject) => {
             this.newUser.find({ 'email': findEmail }, ['_id', 'email', 'password'])
                 .then((data) => {
-                    console.log("in  model", data)
+                    console.log(" model", data)
                     if (data.length > 0) {
                         resolve(data)
                     } else {
@@ -121,7 +125,7 @@ class UserClass {
                     console.log("updated count", Response)
                     resolve()
                 }).catch(error => {
-                    console.log("error in model")
+                    console.log("error")
                     reject(error)
                 })
         })
@@ -138,6 +142,20 @@ class UserClass {
                 .then(data => {
                     console.log("updated password");
                     resolve("updated password")
+                })
+                .catch(error => {
+                    console.log("error")
+                    reject(error)
+                })
+        })
+    }
+
+    updateStatus(id, statuValue) {
+        return new Promise((resolve, reject) => {
+            this.newUser.updateOne({ _id: id }, { $set: { isVerify: statuValue } })
+                .then(data => {
+                    console.log("updated status");
+                    resolve("updated status")
                 })
                 .catch(error => {
                     console.log("error")

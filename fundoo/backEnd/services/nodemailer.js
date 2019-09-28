@@ -3,6 +3,7 @@
 
 module.exports = {
   sendmail(emailId, newToken) {
+    console.log("send mail")
 
     return new Promise((resolve, reject) => {
 

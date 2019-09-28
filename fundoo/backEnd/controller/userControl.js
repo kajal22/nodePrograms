@@ -17,6 +17,7 @@ class Controller {
     registrationControl(req, res) {
         try {
             //validations are performed here for names,email and password 
+
             req.check('firstName', 'firstName should be string format').isAlpha()
             req.check('firstName', 'firstName should not empty').notEmpty()
             req.check('lastName', 'lastName should be string format').isAlpha()
@@ -39,6 +40,7 @@ class Controller {
             }
             else {
                 //take firstname,lastName,email and password in body
+
                 let userData = {
                     "firstName": req.body.firstName,
                     "lastName": req.body.lastName,
@@ -48,13 +50,13 @@ class Controller {
                 }
 
                 userService.registrationService(userData)
-                    .then(data => {
+                    .then((data) => {
                         response.success = true
                         response.message = 'REGISTERED SUCESSFULLY!'
                         return res.status(200).send(response)
                     })
-                    .catch(error => {
-                        console.log("error")
+                    .catch((error) => {
+                        console.log("errorrbtgtryhrt")
                         response.success = false
                         response.message = 'email Already exist';
                         response.error = error
@@ -97,7 +99,6 @@ class Controller {
                         return res.status(200).send(response)
                     })
                     .catch(error => {
-                        console.log("error")
                         response.success = false
                         response.message = 'Login Failed';
                         response.error = error
@@ -162,8 +163,6 @@ class Controller {
                 return res.status(422).send(response)
             }
             else {
-                console.log("ALL DATA", req.body.password);
-
                 let resetData = {
                     '_id': req.body.id,
                     'password': req.body.password
@@ -186,6 +185,31 @@ class Controller {
 
         } catch (err) {
             console.log(err)
+        }
+    }
+    //*****************verifytoken********/
+    verifyTokenControl(req, res) {
+        try {
+            let response = {};
+
+            userService.verifyTokenService(req.body)
+                .then(data => {
+                    response.success = true
+                    response.message = "verified successfully"
+                    response.data = data
+                    return res.status(200).send(response)
+                })
+                .catch(error => {
+                    response.success = false
+                    response.message = 'ERROR OCCURED';
+                    response.error = error
+                    return res.status(400).send(response)
+                })
+
+
+        } catch (err) {
+            console.log(err);
+
         }
     }
 }
