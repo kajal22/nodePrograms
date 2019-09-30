@@ -43,15 +43,15 @@ class Service {
                                 // pass to model to save the data
                                 userModel.registrationSaveUser(registerDetail)
                                     .then(data => {
-                                        console.log("SAVED DATA", data)
                                         console.log("SAAVED DATA ID", data._id)
                                         let payload = {
                                             '_id': data._id
                                         }
 
                                         let newToken = utility.generateToken(payload);
-
-                                        nodemailer.sendmail(data.email, newToken)
+                                        console.log(newToken);
+                                        let verify = '<h1>click on link to for verification</h1><br><p>Click here <a href="http://localhost:4000/#/verify/' + newToken + '"><u>Click here</a></u> to reset</p>'
+                                        nodemailer.sendmail(data.email, verify, newToken)
                                             .then((response) => {
                                                 console.log(response);
                                                 console.log("mail sent sucessfully!!");
@@ -60,22 +60,23 @@ class Service {
                                             }).catch((err) => {
                                                 reject(err)
                                             })
+                                        resolve(data)
                                     })
                                     .catch(error => {
                                         console.log("ERROR is CATCHED")
                                         reject(error)
                                     })
                             }
-                            resolve(data)
+
+                        }).catch(error => {
+                            reject("ERROR")
                         })
+
 
                 } else {
                     reject("mail not existed")
                 }
             })
-                .catch(error => {
-                    reject("ERROR")
-                })
 
         })
 
@@ -88,38 +89,53 @@ class Service {
         return new Promise((resolve, reject) => {
             userModel.searchEmail(loginData.email)
                 .then((data) => {
-                    console.log(data)
+                    console.log("datataaaa", data);
+
                     if (data.length > 0) {
-                        let payload = {
-                            '_id': data[0]._id
-                        }
-                        bcrypt.compare(loginData.password, data[0].password, (err, result) => {
-                            console.log(result)
-                            if (err) {
-                                console.log("password not matched");
-                                reject(err)
-                            }
-                            else if (result) {
-                                let newToken = utility.generateToken(payload);
-                                console.log(newToken)
-                                console.log("password matched")
-                                console.log("\n\n\t\tLOGIN SUCCESSFULL !");
 
-                                userModel.saveToken(newToken, data[0])
-                                    .then(Response => {
-                                        resolve(Response)
+                        userModel.searchEmailVerification(data[0]._id)
+                            .then((data) => {
+                                if (data.length > 0) {
+                                    let payload = {
+                                        '_id': data[0]._id
+                                    }
+                                    bcrypt.compare(loginData.password, data[0].password, (err, result) => {
+                                        console.log(result)
+                                        if (err) {
+                                            console.log("password not matched");
+                                            reject(err)
+                                        }
+                                        else if (result == true) {
+                                            let newToken = utility.generateToken(payload);
+                                            console.log(newToken)
+                                            console.log("password matched")
+                                            console.log("\n\n\t\tLOGIN SUCCESSFULL !");
 
-                                    }).catch(error => {
-                                        console.log("error in catch")
-                                        reject(error)
+                                            userModel.saveToken(newToken, data[0])
+                                                .then(dataObject => {
+
+                                                    resolve(dataObject)
+
+                                                }).catch(error => {
+                                                    console.log("error in catch")
+                                                    reject(error)
+                                                })
+                                        } else {
+                                            reject("login Failed")
+                                        }
                                     })
-                            } else {
-                                reject("Password not matched")
-                            }
-                        })
+                                } else {
+                                    reject("Credential not verified")
+                                }
+                            }).catch((err) => {
+                                reject(err)
+                            })
+
                     } else {
-                        reject("Credential not Matched")
+                        reject("email not found")
                     }
+                }).catch((err) => {
+                    reject(err)
                 })
         })
     }
@@ -140,7 +156,8 @@ class Service {
                         }
                         let newToken = utility.generateToken(payload);
                         console.log(newToken)
-                        nodemailer.sendmail(forgetData.email, newToken).then((response) => {
+                        let resetLink = '<h1>click on link to for Reset Password</h1><br><p><a href="http://localhost:4000/#/resetPassword/' + newToken + '"><u>Click here</a></u> to reset</p>'
+                        nodemailer.sendmail(forgetData.email, resetLink, newToken).then((response) => {
                             console.log(response);
                             console.log("mail sent sucessfully!!");
                             console.log("RESPONSE MAIL", response);
@@ -163,7 +180,7 @@ class Service {
     // //new password will encrypted that store in hashedPassword passed to model
 
     resetPassService(resetData) {
-        let hashedPassword = this.encryptPassword(resetData.password)
+        let hashedPassword = utility.encryptPassword(resetData.password)
         console.log("password", hashedPassword);
         return new Promise((resolve, reject) => {
             userModel.resetPassword(resetData._id, hashedPassword)
@@ -178,17 +195,23 @@ class Service {
     }
 
     //******************verifyEmail*************/
-    verifyTokenService(tokenData) {
-        return new Promise((resolve, reject) => {
-            userModel.updateStatus(tokenData.id, true)
-                .then(data => {
-                    resolve(data)
+    
 
-                }).catch(error => {
-                    console.log("error")
-                    reject(error)
-                })
-        })
+    async verifyEmailService(tokenData) {
+
+        try {
+
+            let updateResult = await userModel.updateDocument(tokenData.id, true)
+
+            if (updateResult) {
+                return true
+            } else {
+                return false
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 const serviceObject = new Service()

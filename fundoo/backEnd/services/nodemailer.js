@@ -2,7 +2,7 @@
 
 
 module.exports = {
-  sendmail(emailId, newToken) {
+  sendmail(emailId,apiLink,newToken) {
     console.log("send mail")
 
     return new Promise((resolve, reject) => {
@@ -21,7 +21,8 @@ module.exports = {
         from: 'kajalc268@gmail.com',
         to: emailId,
         subject: 'Sending Email Successfully!!!',
-        html: '<h1>click on link to for verification</h1><br><p>Click <a href="http://localhost:4000/#/resetPassword/' + newToken + '">here</a> to reset your password</p>'
+        html:apiLink
+        // html: '<h1>click on link to for verification</h1><br><p>Click <a href="http://localhost:4000/#/resetPassword/' + newToken + '">here</a> to reset your password</p>'
 
       };
 

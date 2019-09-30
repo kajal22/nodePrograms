@@ -23,7 +23,6 @@ describe('forget password for negative test Cases', () => {
     it('if forget data of email is Invalid', (done) => {
 
         chai.request(server)
-
             .post('/forgetPassword')
             .send(object.forgetTest[0].forgetEmailInvalid)
             .end((err, res) => {
@@ -32,8 +31,7 @@ describe('forget password for negative test Cases', () => {
             });
     });
    
-   
-    describe('forget data for positive test Cases', () => {
+    describe('forget data for positive test Cases',() => {
     it('mail sent successfully', (done) => {
 
         chai.request(server)

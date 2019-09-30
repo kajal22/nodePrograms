@@ -56,7 +56,6 @@ class Controller {
                         return res.status(200).send(response)
                     })
                     .catch((error) => {
-                        console.log("errorrbtgtryhrt")
                         response.success = false
                         response.message = 'email Already exist';
                         response.error = error
@@ -67,7 +66,7 @@ class Controller {
             console.log(err)
         }
     }
-    //******************logincontrolller*************/
+    //******************logincontrolller*******/
     loginControl(req, res) {
 
         try {
@@ -96,12 +95,13 @@ class Controller {
                     .then(data => {
                         response.success = true
                         response.message = 'LOGIN SUCESSFULLY!'
+                        response.data = data
                         return res.status(200).send(response)
                     })
                     .catch(error => {
                         response.success = false
-                        response.message = 'Login Failed';
                         response.error = error
+                        response.data = error
                         return res.status(400).send(response)
                     })
             }
@@ -187,25 +187,28 @@ class Controller {
             console.log(err)
         }
     }
-    //*****************verifytoken********/
-    verifyTokenControl(req, res) {
+    /*****************verifytoken********/
+
+
+    async verifyEmail(req, res) {
         try {
             let response = {};
 
-            userService.verifyTokenService(req.body)
-                .then(data => {
-                    response.success = true
-                    response.message = "verified successfully"
-                    response.data = data
-                    return res.status(200).send(response)
-                })
-                .catch(error => {
-                    response.success = false
-                    response.message = 'ERROR OCCURED';
-                    response.error = error
-                    return res.status(400).send(response)
-                })
+            let verifyResult = await userService.verifyEmailService(req.body)
 
+            if (verifyResult) {
+                response.success = true
+                response.message = "verified successfully"
+                response.data = verifyResult
+                return res.status(200).send(response)
+
+            } else {
+                response.success = false
+                response.message = 'ERROR OCCURED';
+                response.error = error
+
+                return res.status(400).send(response)
+            }
 
         } catch (err) {
             console.log(err);

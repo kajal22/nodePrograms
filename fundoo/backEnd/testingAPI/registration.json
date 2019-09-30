@@ -17,7 +17,7 @@
             },
             "registrationlastNameEmpty": {
                 "firstName": "kajal",
-                "lastName": " ",
+                "last loginEmailEmptName": " ",
                 "email": "kajalchoudhary705@gmail.com",
                 "loginType": "user",
                 "password": "kajal26"
@@ -131,17 +131,19 @@
                 "password": " "
             },
             "resetPassInvalid": {
-                "password": "dkgjiork"
+                "password": "dk"
             },
             "resetSucessfull": {
-                "password": "kajal1"
+                "password": "kajal"
             },
             "tokenHeader": {
-                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDhjODE3YWYxZmQ4MDc2YzRjZWIwMzAiLCJpYXQiOjE1Njk1NzkxMzQsImV4cCI6MTU2OTYwMDczNH0.1UW70MkdwBWtShCcbZmoNNC7FzrsESdX8U5aA3ocplU"
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkxN2NmNDFiNDY1OTE1MjYzZjk3NjAiLCJpYXQiOjE1Njk4NDA0NjAsImV4cCI6MTU2OTg2MjA2MH0.Cmq9SBHASWLqzUMBH4udhuD7iniS9uH8_Dc3rJ0OnOw"
             },
             "emptyToken": {
                 "token": ""
             }
         }
     ]
+
+    
 }

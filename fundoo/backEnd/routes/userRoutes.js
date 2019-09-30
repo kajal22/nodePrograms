@@ -15,8 +15,15 @@ const router = express.Router()
 const userControl = require('../controller/userControl')
 const utility=require('../../backEnd/utility')
 router.post('/registration',userControl.registrationControl)
+
 router.post('/login',userControl.loginControl)
+
 router.post('/forgetPassword',userControl.forgetPassControl)
+
 router.post('/resetPassword',utility.verifyToken,userControl.resetPassControl)
-router.post('/verifyToken',utility.verifyToken,userControl.verifyTokenControl)
+
+// router.post('/verifyRegistration',utility.verifyToken,userControl.verifyTokenControl)
+
+router.post('/verifyRegistration',utility.verifyToken,userControl.verifyEmail)
+
 module.exports = router

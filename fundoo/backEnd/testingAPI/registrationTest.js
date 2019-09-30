@@ -92,6 +92,7 @@ describe('Regisration for negative test Cases', () => {
                 done();
             });
     });
+});
     describe('Regisration for positive test Cases', () => {
     it('if registration Successfull', (done) => {
 
@@ -103,5 +104,4 @@ describe('Regisration for negative test Cases', () => {
                 done();
             });
     });
-});
 });

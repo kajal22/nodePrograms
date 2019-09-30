@@ -14,7 +14,7 @@ describe('reset password for negative test Cases', () => {
 
         chai.request(server)
             .post('/resetPassword')
-            .send(object.resetTest[0].resetEmailEmpty)
+            .send(object.resetTest[0].resetPassEmpty)
             .set(object.resetTest[0].tokenHeader)
             .end((err, res) => {
                 res.should.have.status(422);
@@ -22,12 +22,12 @@ describe('reset password for negative test Cases', () => {
             });
     });
 
-    it('if reset data of email is Invalid', (done) => {
+    it('if reset data of password is Invalid', (done) => {
 
         chai.request(server)
 
             .post('/resetPassword')
-            .send(object.resetTest[0].resetEmailInvalid)
+            .send(object.resetTest[0].resetPassInvalid)
             .set(object.resetTest[0].tokenHeader)
             .end((err, res) => {
                 res.should.have.status(422);
@@ -40,7 +40,7 @@ describe('reset password for negative test Cases', () => {
         chai.request(server)
 
             .post('/resetPassword')
-            .send(object.resetTest[0].resetEmailInvalid)
+            .send(object.resetTest[0].resetPassInvalid)
             .set(object.resetTest[0].emptyToken)
             .end((err, res) => {
                 res.should.have.status(400);
@@ -48,7 +48,7 @@ describe('reset password for negative test Cases', () => {
             });
     });
 });
-describe('forget data for positive test Cases', () => {
+describe('reset data for positive test Cases', () => {
     it('password updated successfully', (done) => {
 
         chai.request(server)

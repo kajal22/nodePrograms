@@ -6,7 +6,6 @@ let fs = require('fs')
 let data = fs.readFileSync('/home/admin1/Desktop/kajal/fundoo/backEnd/testingAPI/registration.json')
 let object = JSON.parse(data)
 chai.use(chaiHttp);
-console.log(object.loginTest[0].loginSucessfull);
 
 describe('login for negative test Cases', () => {
     it('if all login email is empty', (done) => {
@@ -73,7 +72,7 @@ describe('login for negative test Cases', () => {
             });
     });
 
-    
+})
     describe('login for positive test Cases', () => {
     it('if matched login successfull', (done) => {
 
@@ -85,7 +84,6 @@ describe('login for negative test Cases', () => {
                 done();
             });
     });
-});
-
-
 })
+
+
