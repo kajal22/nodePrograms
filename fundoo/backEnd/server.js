@@ -13,17 +13,17 @@ const express = require('express')
 const app = express()
 const control = require('../backEnd/controller/userControl')
 const routes = require("../backEnd/routes/userRoutes")
+const config = require('../backEnd/config/config')
 let validator = require('express-validator')
-app.use(validator())  
+app.use(validator())
 let mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const PORT = 4000;
-app.use(express.static('../frontEnd'));
 app.use(bodyParser.json());
 app.use('/', routes)
 require('dotenv').config()
-mongoose.connect('mongodb://127.0.0.1:27017/Fundoo', { useNewUrlParser: true }, (err) => {
-    // mongoose.connect(process.env.MONGODBURL, { useNewUrlParser: true }, (err) => {
+mongoose.connect(config.MONGODBURL, { useNewUrlParser: true }, (err) => {
+
     if (err) {
         console.log("connection failed" + err)
     }
@@ -31,12 +31,14 @@ mongoose.connect('mongodb://127.0.0.1:27017/Fundoo', { useNewUrlParser: true }, 
         console.log("database connected succesfully!!!!")
     }
 })
-// prints the server run or not
-const server = app.listen(PORT, function () {
-    console.log("Server is running on Port: " +PORT);
-});
-// const server = app.listen(process.env.PORT, function () {
-//     console.log("Server is running on Port: " +process.env.PORT);
-// });
 
-module.exports=app;
+/**
+  @description- prints the server run or not
+ **/
+
+app.listen(config.PORT, function () {
+    console.log("Server is running on Port: " + config.PORT);
+});
+
+
+module.exports = app;

@@ -83,15 +83,15 @@
        "loginTest": [
         {
             "loginEmpty": {
-                "email": " ",
-                "password": " "
+                "email": "",
+                "password": ""
             },
             "loginEmailEmpty": {
-                "email": " ",
+                "email": "",
                 "password": "kajal26"
             },
             "loginEmailInvalid": {
-                "email": "kajalchoudhary7@gmail.com",
+                "email": "kajal87gmail.com",
                 "password": "kajal12"
             },
             "loginPasswordEmpty": {
@@ -108,7 +108,7 @@
             },
             "loginSucessfull": {
                 "email": "kajalchoudhary705@gmail.com",
-                "password": "kajal12"
+                "password": "kajal"
             }
         }
     ],

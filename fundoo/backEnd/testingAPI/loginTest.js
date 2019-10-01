@@ -12,7 +12,7 @@ describe('login for negative test Cases', () => {
 
         chai.request(server)
             .post('/login')
-            .send(object.loginEmpty)
+            .send(object.loginTest[0].loginEmailEmpty)
             .end((err, res) => {
                 res.should.have.status(422);
                 done();
@@ -26,7 +26,7 @@ describe('login for negative test Cases', () => {
             .post('/login')
             .send(object.loginTest[0].loginEmailInvalid)
             .end((err, res) => {
-                res.should.have.status(400);
+                res.should.have.status(422);
                 done();
             });
     });

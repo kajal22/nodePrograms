@@ -51,27 +51,7 @@ class UserClass {
         this.newUser = mongoose.model('registrations', registerSchema)
     }
 
-    findEmail(findEmail) {
-        return new Promise((resolve, reject) => {
-            this.newUser.find({ 'email': findEmail }, this.newUser.email)
-                .then((data) => {
-                    if (data.length > 0) {
-                        resolve(data)
-                    } else {
-                        resolve()
-                    }
-
-                }).catch((err) => {
-                    reject(err)
-                })
-        })
-    }
-
-    //registered users data will be saved in database
-
-    registrationSaveUser(userData) {
-        console.log(userData, "USERDATA   ");
-
+    create(userData) {
         return new Promise((resolve, reject) => {
             let user = new this.newUser({
                 "firstName": userData.firstName,
@@ -86,6 +66,34 @@ class UserClass {
                     resolve(data)
                 })
                 .catch(error => {
+                    reject(error)
+                })
+        })
+    }
+
+    read(search) {
+        return new Promise((resolve, reject) => {
+            this.newUser.find(search)
+                .then((data) => {
+                    if (data.length > 0) {
+                        resolve(data)
+                    } else {
+                        resolve()
+                    }
+
+                }).catch((err) => {
+                    reject(err)
+                })
+        })
+    }
+
+
+    update(searchBy,updateData){
+        return new Promise((resolve, reject) => {
+            this.newUser.updateOne(searchBy, { $set:updateData })
+                .then(response => {  
+                    resolve()
+                }).catch(error => {
                     console.log("error")
                     reject(error)
                 })
@@ -93,29 +101,12 @@ class UserClass {
     }
 
 
+
+
     /******loginmodel*********/
 
 
-    //find email that should be present in database
-
-    searchEmail(findEmail) {
-        return new Promise((resolve, reject) => {
-            this.newUser.find({ 'email': findEmail })
-                .then((data) => {
-                    if (data.length > 0) {
-                        resolve(data)
-                    } else {
-                        resolve(data)
-                    }
-                }).catch((err) => {
-                    console.log("error in model");
-                    reject(err)
-                })
-        })
-    }
-
     searchEmailVerification(id) {
-
         return new Promise((resolve, reject) => {
             this.newUser.find({ '_id': id, "isVerify": true })
                 .then((data) => {
@@ -129,55 +120,12 @@ class UserClass {
                 })
         })
     }
-    //save token while login in database 
-
-    saveToken(newToken, data) {
-        return new Promise((resolve, reject) => {
-            this.newUser.updateOne({ _id: data._id }, { $set: { token: newToken } })
-
-                .then(response => {
-                    console.log("updated the data ")
-                    console.log("updated count ", response)
-                    let dataObject = {
-                        "firstName": data.firstName,
-                        "lastName": data.lastName,
-                        "email": data.email,
-                        "loginType": data.loginType,
-                        "token": newToken
-                    }
-                    resolve(dataObject)
-                }).catch(error => {
-                    console.log("error")
-                    reject(error)
-                })
-        })
-    }
 
 
-    /**************resetModel*************/
+    
 
-    //replace old password by new pew hashed password set that and update in database
-
-    resetPassword(id, hashedPassword) {
-        return new Promise((resolve, reject) => {
-            this.newUser.updateOne({ _id: id }, { $set: { password: hashedPassword } })
-                .then(data => {
-                    console.log("updated password");
-                    resolve("updated password")
-                })
-                .catch(error => {
-                    console.log("error")
-                    reject(error)
-                })
-        })
-    }
-
-
-
-    async  updateDocument(id, statuValue) {
-
+    async  updateStatusValue(id, statuValue) {
         try {
-
             let updateResult = await this.newUser.updateOne({ _id: id }, { $set: { isVerify: statuValue } })
             console.log("\n\nUpdate result ", updateResult);
 
@@ -192,12 +140,8 @@ class UserClass {
 
         } catch (error) {
             console.log(error);
-
         }
-
     }
-
-
 }
 const modelObject = new UserClass()
 module.exports = modelObject

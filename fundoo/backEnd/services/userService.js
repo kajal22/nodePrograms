@@ -13,11 +13,16 @@ const userModel = require('../model/userModel');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const utility = require('../utility')
-const nodemailer = require('../services/nodemailer')
+const nodemailer = require('./emailService')
 class Service {
 
 
-
+    /**
+      @description-registration data find mail thruogh crud operation of read()
+      if mail found then come back via using promises, if data not found then it
+      will register using create(),after that data will save in model. mail will 
+      send sucessfully after the registration.
+     **/
 
     registrationService(userData) {
 
@@ -27,7 +32,10 @@ class Service {
                 console.log('res: ' + response);
 
                 if (response == true) {
-                    userModel.findEmail(userData.email)
+                    let searchByEmail = {
+                        'email': userData.email
+                    }
+                    userModel.read(searchByEmail)
                         .then(data => {
                             if (data) {
                                 reject("email already existed")
@@ -40,14 +48,15 @@ class Service {
                                     "loginType": userData.loginType,
                                     "password": utility.encryptPassword(userData.password)
                                 }
+
                                 // pass to model to save the data
-                                userModel.registrationSaveUser(registerDetail)
+                                userModel.create(registerDetail)
                                     .then(data => {
-                                        console.log("SAAVED DATA ID", data._id)
                                         let payload = {
                                             '_id': data._id
                                         }
 
+                                        // token will generated using paylod that token verify
                                         let newToken = utility.generateToken(payload);
                                         console.log(newToken);
                                         let verify = '<h1>click on link to for verification</h1><br><p>Click here <a href="http://localhost:4000/#/verify/' + newToken + '"><u>Click here</a></u> to reset</p>'
@@ -82,54 +91,74 @@ class Service {
 
     }
     /**************loginservice**************/
-    //while login it compare login password and registered password by bcrypt compare if password matched
-    //login successfull 
 
+    /**
+         @description- search email user data is present or not ,if prsent email then it 
+         will verify through verifyEmailService method,if user will verify through mail before 
+         the expire time then status will be true.while login it compare login password and 
+         registered password by bcrypt compare if password matched login successfull.
+        **/
     loginService(loginData) {
         return new Promise((resolve, reject) => {
-            userModel.searchEmail(loginData.email)
+            let searchByEmail = {
+                'email': loginData.email
+            }
+            userModel.read(searchByEmail)
                 .then((data) => {
-                    console.log("datataaaa", data);
-
+                    //email is present then chek in database isVerify is true or false
                     if (data.length > 0) {
-
-                        userModel.searchEmailVerification(data[0]._id)
-                            .then((data) => {
-                                if (data.length > 0) {
-                                    let payload = {
-                                        '_id': data[0]._id
-                                    }
-                                    bcrypt.compare(loginData.password, data[0].password, (err, result) => {
-                                        console.log(result)
-                                        if (err) {
-                                            console.log("password not matched");
-                                            reject(err)
-                                        }
-                                        else if (result == true) {
-                                            let newToken = utility.generateToken(payload);
-                                            console.log(newToken)
-                                            console.log("password matched")
-                                            console.log("\n\n\t\tLOGIN SUCCESSFULL !");
-
-                                            userModel.saveToken(newToken, data[0])
-                                                .then(dataObject => {
-
-                                                    resolve(dataObject)
-
-                                                }).catch(error => {
-                                                    console.log("error in catch")
-                                                    reject(error)
-                                                })
-                                        } else {
-                                            reject("login Failed")
-                                        }
-                                    })
-                                } else {
-                                    reject("Credential not verified")
+                        if (data[0].isVerify == true) {
+                            let payload = {
+                                '_id': data[0]._id
+                            }
+                            //password will be compare with entered password and database password
+                            bcrypt.compare(loginData.password, data[0].password, (err, result) => {
+                                console.log(result)
+                                if (err) {
+                                    reject(err)
                                 }
-                            }).catch((err) => {
-                                reject(err)
+                                //if password matched then generate token 
+                                else if (result == true) {
+                                    let newToken = utility.generateToken(payload);
+                                    console.log(newToken)
+                                    console.log("password matched")
+                                    console.log("\n\n\t\tLOGIN SUCCESSFULL !");
+                                    let searchById = {
+                                        _id: data[0]._id
+                                    }
+                                    let updateData = {
+                                        token: newToken
+                                    }
+                                    userModel.update(searchById, updateData)
+                                        .then(() => {
+
+                                            let dataObject = {
+                                                success: true,
+                                                msg: "Login Successfully",
+                                                data: {
+                                                    "firstName": data[0].firstName,
+                                                    "lastName": data[0].lastName,
+                                                    "email": data[0].email,
+                                                    "loginType": data[0].loginType,
+                                                    "token": newToken
+                                                }
+                                            }
+
+
+                                            resolve(dataObject)
+
+                                        }).catch(error => {
+                                            console.log("error in catch")
+                                            reject(error)
+                                        })
+                                } else if (result == false) {
+                                    reject("login Failed")
+                                }
                             })
+                        }
+                        else {
+                            reject('Registration not verified')
+                        }
 
                     } else {
                         reject("email not found")
@@ -140,15 +169,19 @@ class Service {
         })
     }
     /***************forgetPassword************/
-
-    // forgetPassword First it will find the email to check that email is present or not if mail found 
-    // then generate a token specifies the user's identity from token then send mail to user's mail'id through nodemailer 
-    //came from nodemailer as response email sent ...
-
+    
+    /**
+         @description
+         forgetPassword First it will find the email to check that email is present or not if mail found 
+         then generate a token specifies the user's identity from token then send mail to user's mail'id through nodemailer 
+        came from nodemailer as response email sent ...
+    ***/
     forgetPassService(forgetData) {
-        console.log(forgetData, "forgetdata");
         return new Promise((resolve, reject) => {
-            userModel.searchEmail(forgetData.email)
+            let searchByEmail = {
+                'email': forgetData.email
+            }
+            userModel.read(searchByEmail)
                 .then((data) => {
                     if (data.length > 0) {
                         let payload = {
@@ -158,9 +191,7 @@ class Service {
                         console.log(newToken)
                         let resetLink = '<h1>click on link to for Reset Password</h1><br><p><a href="http://localhost:4000/#/resetPassword/' + newToken + '"><u>Click here</a></u> to reset</p>'
                         nodemailer.sendmail(forgetData.email, resetLink, newToken).then((response) => {
-                            console.log(response);
                             console.log("mail sent sucessfully!!");
-                            console.log("RESPONSE MAIL", response);
                             resolve(response)
                         }).catch((err) => {
                             reject(err)
@@ -170,7 +201,6 @@ class Service {
                         reject("email not registerd")
                     }
                 }).catch(error => {
-                    console.log("error while sending mail")
                     reject(error)
                 })
         })
@@ -183,7 +213,13 @@ class Service {
         let hashedPassword = utility.encryptPassword(resetData.password)
         console.log("password", hashedPassword);
         return new Promise((resolve, reject) => {
-            userModel.resetPassword(resetData._id, hashedPassword)
+            let searchById = {
+                _id: resetData._id
+            }
+            let updateData = {
+                password: hashedPassword
+            }
+            userModel.update(searchById, updateData)
                 .then(data => {
                     resolve(data)
 
@@ -195,13 +231,11 @@ class Service {
     }
 
     //******************verifyEmail*************/
-    
+
 
     async verifyEmailService(tokenData) {
-
         try {
-
-            let updateResult = await userModel.updateDocument(tokenData.id, true)
+            let updateResult = await userModel.updateStatusValue(tokenData.id, true)
 
             if (updateResult) {
                 return true

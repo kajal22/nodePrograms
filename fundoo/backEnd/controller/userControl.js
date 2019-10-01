@@ -63,7 +63,7 @@ class Controller {
                     })
             }
         } catch (err) {
-            console.log(err)
+            return res.status(400).send(response)
         }
     }
     //******************logincontrolller*******/
@@ -93,20 +93,16 @@ class Controller {
 
                 userService.loginService(loginData)
                     .then(data => {
-                        response.success = true
-                        response.message = 'LOGIN SUCESSFULLY!'
-                        response.data = data
-                        return res.status(200).send(response)
+                        return res.status(200).send(data)
                     })
                     .catch(error => {
                         response.success = false
                         response.error = error
-                        response.data = error
                         return res.status(400).send(response)
                     })
             }
         } catch (err) {
-            console.log(err)
+            return res.status(400).send(response)
         }
     }
     /************forgetControl*************/
@@ -144,7 +140,7 @@ class Controller {
                     })
             }
         } catch (err) {
-            console.log(err)
+            return res.status(400).send(err)
         }
     }
     /******************resetControl************/
@@ -184,7 +180,7 @@ class Controller {
             }
 
         } catch (err) {
-            console.log(err)
+            return res.status(400).send(err)
         }
     }
     /*****************verifytoken********/
@@ -211,7 +207,7 @@ class Controller {
             }
 
         } catch (err) {
-            console.log(err);
+            return res.status(400).send(err)
 
         }
     }

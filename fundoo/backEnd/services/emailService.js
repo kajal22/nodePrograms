@@ -1,24 +1,21 @@
 
+const config=require('../config/config')
+const nodemailer = require('nodemailer');
+class NodeMailer{
 
-
-module.exports = {
   sendmail(emailId,apiLink,newToken) {
-    console.log("send mail")
-
-    return new Promise((resolve, reject) => {
-
-      var nodemailer = require('nodemailer');
+   
+    return new Promise((resolve, reject) => { 
       var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service:config.service,
         auth: {
-          user: 'kajalc268@gmail.com',
-          pass: 'kaju123456@'
+          user: config.user,
+          pass: config.pass
         }
       });
 
       var mailOptions = {
-
-        from: 'kajalc268@gmail.com',
+        from: config.user,
         to: emailId,
         subject: 'Sending Email Successfully!!!',
         html:apiLink
@@ -38,7 +35,8 @@ module.exports = {
   }
 
 }
-
+const mailObject=new NodeMailer
+module.exports=mailObject
 
 
 
