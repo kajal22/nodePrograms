@@ -10,7 +10,7 @@
 **************************************************************************/
 
 
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 let registerSchema = mongoose.Schema({
     firstName: {
@@ -39,6 +39,9 @@ let registerSchema = mongoose.Schema({
     isVerify: {
         type: Boolean,
     },
+    imageUrl: {
+        type: String
+    },
 },
     {
         timestamps: true
@@ -48,7 +51,7 @@ let registerSchema = mongoose.Schema({
 class UserClass {
 
     constructor() {
-        this.newUser = mongoose.model('registrations', registerSchema)
+        this.newUser = mongoose.model("registrations", registerSchema);
     }
 
     create(userData) {
@@ -63,12 +66,12 @@ class UserClass {
             });
             user.save()
                 .then(data => {
-                    resolve(data)
+                    resolve(data);
                 })
                 .catch(error => {
-                    reject(error)
-                })
-        })
+                    reject(error);
+                });
+        });
     }
 
     read(search) {
@@ -76,72 +79,32 @@ class UserClass {
             this.newUser.find(search)
                 .then((data) => {
                     if (data.length > 0) {
-                        resolve(data)
+                        resolve(data);
                     } else {
-                        resolve()
+                        resolve();
                     }
 
                 }).catch((err) => {
-                    reject(err)
-                })
-        })
+                    reject(err);
+                });
+        });
     }
 
 
-    update(searchBy,updateData){
+    update(searchBy, updateData) {
         return new Promise((resolve, reject) => {
-            this.newUser.updateOne(searchBy, { $set:updateData })
-                .then(response => {  
-                    resolve()
+            this.newUser.updateOne(searchBy, { $set: updateData })
+                .then(response => {
+                    resolve("updated");
                 }).catch(error => {
-                    console.log("error")
-                    reject(error)
-                })
-        })
+                    reject("error");
+                });
+        });
     }
 
 
 
 
-    /******loginmodel*********/
-
-
-    searchEmailVerification(id) {
-        return new Promise((resolve, reject) => {
-            this.newUser.find({ '_id': id, "isVerify": true })
-                .then((data) => {
-                    if (data.length > 0) {
-                        resolve(data)
-                    } else {
-                        reject("verification not done")
-                    }
-                }).catch((err) => {
-                    reject(err)
-                })
-        })
-    }
-
-
-    
-
-    async  updateStatusValue(id, statuValue) {
-        try {
-            let updateResult = await this.newUser.updateOne({ _id: id }, { $set: { isVerify: statuValue } })
-            console.log("\n\nUpdate result ", updateResult);
-
-            if (updateResult.nModified == 1) {
-                console.log("\n\nemail verified succesfully !");
-                return true
-            }
-            else // user not found 
-            {
-                return false
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
 }
-const modelObject = new UserClass()
-module.exports = modelObject
+const modelObject = new UserClass();
+module.exports = modelObject;

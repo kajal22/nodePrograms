@@ -8,12 +8,17 @@
 * @since           : 25-09-2019
 * 
 **************************************************************************/
-const emailExistence = require('email-existence')
-const userModel = require('../model/userModel');
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
-const utility = require('../utility')
-const nodemailer = require('./emailService')
+const emailExistence = require("email-existence");
+const userModel = require("../model/userModel");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const redis = require("redis");
+const utility = require("../utility");
+const nodemailer = require("./emailService");
+
+const client = new redis.createClient();
+
+
 class Service {
 
 
@@ -28,17 +33,17 @@ class Service {
 
         return new Promise((resolve, reject) => {
             emailExistence.check(userData.email, function (error, response) {
-                console.log(userData.email)
-                console.log('res: ' + response);
+                console.log(userData.email);
+                console.log("res: " + response);
 
                 if (response == true) {
                     let searchByEmail = {
-                        'email': userData.email
-                    }
+                        "email": userData.email
+                    };
                     userModel.read(searchByEmail)
                         .then(data => {
                             if (data) {
-                                reject("email already existed")
+                                reject("email already existed");
                             } else {
 
                                 let registerDetail = {
@@ -47,19 +52,19 @@ class Service {
                                     "email": userData.email,
                                     "loginType": userData.loginType,
                                     "password": utility.encryptPassword(userData.password)
-                                }
+                                };
 
-                                // pass to model to save the data
+                                /****pass to model to save the data*****/
                                 userModel.create(registerDetail)
                                     .then(data => {
                                         let payload = {
-                                            '_id': data._id
-                                        }
+                                            "id": data._id
+                                        };
 
-                                        // token will generated using paylod that token verify
+                                        /****token will generated using paylod that token verify***/
                                         let newToken = utility.generateToken(payload);
                                         console.log(newToken);
-                                        let verify = '<h1>click on link to for verification</h1><br><p>Click here <a href="http://localhost:4000/#/verify/' + newToken + '"><u>Click here</a></u> to reset</p>'
+                                        let verify = '<h1>click on link to for verification</h1><br><p>Click here <a href="http://localhost:4000/#/verify/' + newToken + '"><u>Click here</a></u> to reset</p>';
                                         nodemailer.sendmail(data.email, verify, newToken)
                                             .then((response) => {
                                                 console.log(response);
@@ -67,27 +72,27 @@ class Service {
                                                 console.log("RESPONSE MAIL", response);
                                                 resolve(response);
                                             }).catch((err) => {
-                                                reject(err)
-                                            })
-                                        resolve(data)
+                                                reject(err);
+                                            });
+                                        resolve(data);
                                     })
                                     .catch(error => {
-                                        console.log("ERROR is CATCHED")
-                                        reject(error)
-                                    })
+                                        console.log("ERROR is CATCHED");
+                                        reject(error);
+                                    });
                             }
 
                         }).catch(error => {
-                            reject("ERROR")
-                        })
+                            reject("ERROR");
+                        });
 
 
                 } else {
-                    reject("mail not existed")
+                    reject("mail not existed");
                 }
-            })
+            });
 
-        })
+        });
 
     }
     /**************loginservice**************/
@@ -101,34 +106,34 @@ class Service {
     loginService(loginData) {
         return new Promise((resolve, reject) => {
             let searchByEmail = {
-                'email': loginData.email
-            }
+                "email": loginData.email
+            };
             userModel.read(searchByEmail)
                 .then((data) => {
-                    //email is present then chek in database isVerify is true or false
+                    /**email is present then chek in database isVerify is true or false**/
                     if (data.length > 0) {
                         if (data[0].isVerify == true) {
                             let payload = {
-                                '_id': data[0]._id
-                            }
-                            //password will be compare with entered password and database password
+                                "_id": data[0]._id
+                            };
+                            /**password will be compare with entered password and database password**/
                             bcrypt.compare(loginData.password, data[0].password, (err, result) => {
-                                console.log(result)
+                                console.log(result);
                                 if (err) {
-                                    reject(err)
+                                    reject(err);
                                 }
-                                //if password matched then generate token 
+                                /** if password matched then generate token**/
                                 else if (result == true) {
                                     let newToken = utility.generateToken(payload);
-                                    console.log(newToken)
-                                    console.log("password matched")
+                                    console.log(newToken);
+                                    console.log("password matched");
                                     console.log("\n\n\t\tLOGIN SUCCESSFULL !");
                                     let searchById = {
                                         _id: data[0]._id
-                                    }
+                                    };
                                     let updateData = {
                                         token: newToken
-                                    }
+                                    };
                                     userModel.update(searchById, updateData)
                                         .then(() => {
 
@@ -142,34 +147,34 @@ class Service {
                                                     "loginType": data[0].loginType,
                                                     "token": newToken
                                                 }
-                                            }
+                                            };
 
 
-                                            resolve(dataObject)
+                                            resolve(dataObject);
 
                                         }).catch(error => {
-                                            console.log("error in catch")
-                                            reject(error)
-                                        })
+                                            console.log("error in catch");
+                                            reject(error);
+                                        });
                                 } else if (result == false) {
-                                    reject("login Failed")
+                                    reject("login Failed");
                                 }
-                            })
+                            });
                         }
                         else {
-                            reject('Registration not verified')
+                            reject("Registration not verified");
                         }
 
                     } else {
-                        reject("email not found")
+                        reject("email not found");
                     }
                 }).catch((err) => {
-                    reject(err)
-                })
-        })
+                    reject(err);
+                });
+        });
     }
-    /***************forgetPassword************/
-    
+    /***********************forgetPassword***********************/
+
     /**
          @description
          forgetPassword First it will find the email to check that email is present or not if mail found 
@@ -179,74 +184,106 @@ class Service {
     forgetPassService(forgetData) {
         return new Promise((resolve, reject) => {
             let searchByEmail = {
-                'email': forgetData.email
-            }
+                "email": forgetData.email
+            };
             userModel.read(searchByEmail)
                 .then((data) => {
                     if (data.length > 0) {
                         let payload = {
-                            '_id': data[0]._id
-                        }
+                            "_id": data[0]._id
+                        };
                         let newToken = utility.generateToken(payload);
-                        console.log(newToken)
-                        let resetLink = '<h1>click on link to for Reset Password</h1><br><p><a href="http://localhost:4000/#/resetPassword/' + newToken + '"><u>Click here</a></u> to reset</p>'
+                        console.log(newToken);
+                        let resetLink = '<h1>click on link to for Reset Password</h1><br><p><a href="http://localhost:4000/#/resetPassword/' + newToken + '"><u>Click here</a></u> to reset</p>';
                         nodemailer.sendmail(forgetData.email, resetLink, newToken).then((response) => {
                             console.log("mail sent sucessfully!!");
-                            resolve(response)
+                            resolve(response);
+
                         }).catch((err) => {
-                            reject(err)
-                        })
+                            reject(err);
+                        });
 
                     } else {
-                        reject("email not registerd")
+                        reject("email not registerd");
                     }
                 }).catch(error => {
-                    reject(error)
-                })
-        })
+                    reject(error);
+                });
+        });
     }
-    /**********resetPassword************/
+    /*********************resetPassword*********************/
 
-    // //new password will encrypted that store in hashedPassword passed to model
+    /**
+    @description-new password will encrypted that store in hashedPassword passed to model then 
+    set hashedpassword to user's entered password then password will reset.
+    **/
 
     resetPassService(resetData) {
-        let hashedPassword = utility.encryptPassword(resetData.password)
+        let hashedPassword = utility.encryptPassword(resetData.password);
         console.log("password", hashedPassword);
         return new Promise((resolve, reject) => {
             let searchById = {
                 _id: resetData._id
-            }
+            };
             let updateData = {
                 password: hashedPassword
-            }
+            };
             userModel.update(searchById, updateData)
                 .then(data => {
-                    resolve(data)
+                    resolve(data);
 
                 }).catch(error => {
-                    console.log("error")
-                    reject(error)
-                })
-        })
+                    console.log("error");
+                    reject(error);
+                });
+        });
     }
 
-    //******************verifyEmail*************/
+    //**************************verifyEmail********************/
 
-
-    async verifyEmailService(tokenData) {
+    /**
+    @description- after registration mail in user's mail'id clicking on that user will be verified
+    and the value will be replaced false to true after login
+     **/
+    async verifyEmailService(userId) {
         try {
-            let updateResult = await userModel.updateStatusValue(tokenData.id, true)
 
-            if (updateResult) {
-                return true
+            let searchById = { _id: userId };
+            let updateData = { isVerify: true };
+
+            let updateResult = await userModel.update(searchById, updateData);
+
+            if (updateResult == "updated") {
+                return true;
             } else {
-                return false
+                return false;
             }
 
         } catch (error) {
             console.log(error);
         }
     }
+
+    async uploadService(uploadData) {
+        try {
+            let searchBy = {
+                "_id": uploadData.id
+            }
+            let updateData = {
+                "imageUrl": uploadData.url
+            }
+            let upload = await userModel.update(searchBy, updateData)
+            if (upload == "updated") {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 }
-const serviceObject = new Service()
+const serviceObject = new Service();
 module.exports = serviceObject;

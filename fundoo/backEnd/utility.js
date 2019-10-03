@@ -9,11 +9,12 @@ class UtilityClass {
                     if (err) {
                         res.status(400).send(" Token has expired !!!")
                     } else {
-                        req.body.id = data._id;
+                        req.token = data;
+                        console.log(req.token,"req.token");
                         console.log("token got")
                         next();
                     }
-                })
+                });
 
             } else {
                 console.log("token not got");
@@ -21,7 +22,7 @@ class UtilityClass {
             }
         } catch (err) {
             console.log(err);
-        }
+        } 
     }
     encryptPassword(password) {
         let saltRounds = 10

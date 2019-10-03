@@ -10,29 +10,35 @@
 **************************************************************************/
 
 
-const express = require('express')
-const router = express.Router()
-const userControl = require('../controller/userControl')
-const utility=require('../../backEnd/utility')
+const express = require("express");
+const router = express.Router();
+const userControl = require("../controller/userControl");
+const utility=require("../../backEnd/utility");
+const multer=require("../config/multer");
+console.log("multr",multer);
+
+
 /**
   @description-  router to controller through require file that is api of registration
  **/
-router.post('/registration',userControl.registrationControl)
+router.post("/registration",userControl.registrationControl);
 /**
   @description-  router to controller through require file that is api of login
  **/
-router.post('/login',userControl.loginControl)
+router.post("/login",userControl.loginControl);
 /**
   @description- router to controller through require file that is api of forgetPassword
  **/
-router.post('/forgetPassword',userControl.forgetPassControl)
+router.post("/forgetPassword",userControl.forgetPassControl);
 /**
   @description-  router to controller through require file that is api of resetPassword
  **/
-router.post('/resetPassword',utility.verifyToken,userControl.resetPassControl)
+router.post("/resetPassword",utility.verifyToken,userControl.resetPassControl);
 /**
   @description- router to controller through require file that is api of verifyRegistration
  **/
-router.post('/verifyRegistration',utility.verifyToken,userControl.verifyEmail)
+router.post("/verifyRegistration",utility.verifyToken,userControl.verifyEmail);
 
-module.exports = router
+router.post("/upload",utility.verifyToken,multer.single('file'),userControl.uploadControl);
+
+module.exports = router;
