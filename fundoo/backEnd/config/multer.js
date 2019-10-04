@@ -3,7 +3,6 @@ const multerS3 = require('multer-s3');
 const s3 = require('../config/s3');
 
 require('dotenv').config();
-
 var upload = multer({
     storage: multerS3({
         s3: s3,

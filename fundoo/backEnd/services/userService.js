@@ -16,8 +16,8 @@ const redis = require("redis");
 const utility = require("../utility");
 const nodemailer = require("./emailService");
 
-const client = new redis.createClient();
 
+const client = new redis.createClient();
 
 class Service {
 
@@ -58,7 +58,7 @@ class Service {
                                 userModel.create(registerDetail)
                                     .then(data => {
                                         let payload = {
-                                            "id": data._id
+                                            "_id": data._id
                                         };
 
                                         /****token will generated using paylod that token verify***/
@@ -126,6 +126,10 @@ class Service {
                                 else if (result == true) {
                                     let newToken = utility.generateToken(payload);
                                     console.log(newToken);
+                                    client.set(data[0]._id+"newTokenSet", newToken)
+                                    client.get(data[0]._id+"newTokenSet", function (err, reply) {
+                                    console.log("token reply",reply);
+                                    });
                                     console.log("password matched");
                                     console.log("\n\n\t\tLOGIN SUCCESSFULL !");
                                     let searchById = {

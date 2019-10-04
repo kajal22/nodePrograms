@@ -93,8 +93,12 @@ class UserClass {
 
     update(searchBy, updateData) {
         return new Promise((resolve, reject) => {
+            console.log(searchBy);
+            
             this.newUser.updateOne(searchBy, { $set: updateData })
                 .then(response => {
+                    console.log("updated  ",response);
+                    
                     resolve("updated");
                 }).catch(error => {
                     reject("error");

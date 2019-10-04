@@ -12,7 +12,7 @@
 
 
 const userService = require("../services/userService");
-const s3=require("../config/s3")
+const s3 = require("../config/s3")
 
 class Controller {
     registrationControl(req, res) {
@@ -190,7 +190,7 @@ class Controller {
     async verifyEmail(req, res) {
         try {
             let response = {};
-            let verifyResult = await userService.verifyEmailService(req.token.id);
+            let verifyResult = await userService.verifyEmailService(req.token._id);
 
             if (verifyResult) {
                 response.success = true;
@@ -214,16 +214,15 @@ class Controller {
 
     async uploadControl(req, res) {
         const s3url = await s3.getSignedUrl('getObject', { Bucket: process.env.BUCKET, Key: req.file.originalname });
-console.log("req",req.token.id);
 
         let uploadFile = {
-            "id": req.token.id,
+            "id": req.token._id,
             "url": s3url
         }
         console.log(uploadFile);
-        
+
         let fileUploadResponse = await userService.uploadService(uploadFile)
-        let response={};
+        let response = {};
         if (fileUploadResponse) {
             response.success = true;
             response.message = "uploaded successfully";
