@@ -27,6 +27,13 @@ router.post("/resetPassword",utility.verifyToken,userControl.resetPassControl);
 
 router.post("/verifyRegistration",utility.verifyToken,userControl.verifyEmail);
 
-router.post("/label",utility.verifyToken,labelControl.makeLabelController);
+/****create label api****/
+router.post("/createLabel",utility.verifyToken,labelControl.createLabelController);
 
-module.exports = router;
+router.post("/updateLabel",utility.verifyToken,labelControl.updateLabelController);
+
+router.post("/deleteLabel",utility.verifyToken,labelControl.deleteLabelController);
+
+router.get("/getAllLabel",utility.verifyToken,labelControl.getAllLabelController)
+
+module.exports = router; 

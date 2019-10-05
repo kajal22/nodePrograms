@@ -63,7 +63,7 @@ class UserClass {
                 "loginType": userData.loginType,
                 "password": userData.password,
                 "isVerify": false
-            });
+            });                                                                                                                              
             user.save()
                 .then(data => {
                     resolve(data);

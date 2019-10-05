@@ -33,7 +33,7 @@ class UtilityClass {
 
 
     generateToken(payload) {
-        let token = jwt.sign(payload, 'secret', { expiresIn: '6hr' })
+        let token = jwt.sign(payload, 'secret', { expiresIn: '8hr' })
         return token;
     }
 }
