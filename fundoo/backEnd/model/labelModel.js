@@ -73,7 +73,6 @@ class createModel {
             this.labelDataCollection.deleteOne(searchBy)
 
                 .then((data) => {
-                    console.log("DAAAAAAATAAA",data);
                     
                     if (data.deletedCount == 1) {
                         resolve("data deleted")

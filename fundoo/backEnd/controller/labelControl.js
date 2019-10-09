@@ -19,7 +19,6 @@ class LabelControl {
                     "labelName": req.body.labelName,
                     "userId": req.token._id
                 };
-                console.log("labelData", labelData)
 
                 let makeLabelResult = await labelService.createLabelService(labelData)
                 if (makeLabelResult) {

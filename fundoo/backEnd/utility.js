@@ -10,8 +10,7 @@ class UtilityClass {
                         res.status(400).send(" Token has expired !!!")
                     } else {
                         req.token = data;
-                        console.log(req.token,"req.token");
-                        console.log("token got")
+                       
                         next();
                     }
                 });
