@@ -11,47 +11,42 @@
 
 const express = require("express");
 const app = express();
-const redis = require("redis");
-
-const control = require("../backEnd/controller/userControl");
-const routes = require("../backEnd/routes/userRoutes");
-const config = require("../backEnd/config/config");
+const control = require("./controller/userControl");
+const  noteControl=require("./controller/noteControl");
+const config = require("./config/config");
 let validator = require("express-validator");
-app.use(validator());
-let mongoose = require("mongoose");
+const mongooseService=require("./services/mongooseService");
 const bodyParser = require("body-parser");
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile=require("../backEnd/swagger/swagger.json");
 app.use(bodyParser.json());
+const routes = require("./routes/index");
+var cors = require("cors");
+app.use(cors());
+app.use(validator()); 
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/", routes);
+
 require("dotenv").config();
-
-const client = new redis.createClient();
-
-client.on("connect", function (err, data) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("redis connected");
-    }
-});
-
-mongoose.connect(config.MONGODBURL, { useNewUrlParser: true }, (err) => {
-
-    if (err) {
-        console.log("connection failed" + err);
-    }
-    else {
-        console.log("database connected succesfully!!!!");
-    }
-});
-
-
+const logger=require("./logger");
+var cron = require("node-cron");
 /**
 @description- prints the server run or not
 **/
 
 app.listen(config.PORT, function () {
-    console.log("Server is running on Port: " + config.PORT);
+    logger.info("Server is running on Port: " + config.PORT);
+    mongooseService.mongooseConnection();
 });
 
+ 
+// cron.schedule("* * * * * *", () => {
+
+// userNotify={
+// userId:"5d973f03b7bb2e53bb101c72"
+// };   
+//     noteControl.reminderNotify(userNotify);
+//   console.log("Runing a job at 01:00 at America/Sao_Paulo timezone");
+// });
 
 module.exports = app;

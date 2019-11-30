@@ -3,7 +3,8 @@ const config = require("../config/config");
 const nodemailer = require("nodemailer");
 class NodeMailer {
 
-  sendmail(emailId, apiLink, newToken) {
+  sendmail(emailId, apiLink) {
+    console.log("emailId", emailId);
 
     return new Promise((resolve, reject) => {
       var transporter = nodemailer.createTransport({
@@ -17,9 +18,8 @@ class NodeMailer {
       var mailOptions = {
         from: config.user,
         to: emailId,
-        subject: "Sending Email Successfully!!!",
+        subject: " Email sent of fundooApp!!!",
         html: apiLink
-        // html: '<h1>click on link to for verification</h1><br><p>Click <a href="http://localhost:4000/#/resetPassword/' + newToken + '">here</a> to reset your password</p>'
 
       };
 

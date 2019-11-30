@@ -1,0 +1,159 @@
+{
+    "token": [
+        {
+            "tokenHeader": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGIyY2EwN2UxZjJiNDQyMDAyZTE4NWMiLCJpYXQiOjE1NzI1Mjc1ODUsImV4cCI6MTU3MjU1NjM4NX0.CWQqQTTHPeO7gVZzEb7ou7HRz_IvUYDcFYQxE07EPWQ"
+            },
+            "emptyToken": {
+                "token": ""
+            }
+        }
+    ],
+    "createLabelTest": [
+        {
+            "labelEmpty": {
+                "labelName": ""
+            },
+            "labelNameEmpty": {
+                "labelName": ""
+            },
+            "labelUserIdEmpty": {
+                "labelName": "first label"
+            },
+            "successfull": {
+                "labelName": "first new label"
+            }
+        }
+    ],
+    "updateLabelTest": [
+        {
+            "updateLabelEmpty": {
+                "labelName": "",
+                "userId": "5d973f03b7bb2e53bb101c72"
+            },
+            "labelNameEmpty": {
+                "labelName": "",
+                "userId": "d973f03b7bb2e53bb101c72"
+            },
+            "labelUserIdEmpty": {
+                "labelName": "label",
+                "userId": ""
+            },
+            "updatedSuccessfull": {
+                "newLabelName": "label HJHJUIIJKJI",
+                "_id": "5d98853b1180cb18e8545202"
+            }
+        }
+    ],
+    "deleteLabelTest": [
+        {
+            "labelIdEmpty": {
+                "_id": ""
+            },
+            "deletedSucessfull": {
+                "_id": "5d9885541180cb18e8545203"
+            }
+        }
+    ],
+    "createNoteTest": [
+        {
+            "createNoteAllEmpty": {
+                "title": "",
+                "_id": ""
+            },
+            "createNoteTitleEmpty": {
+                "title": "",
+                "_id": "5da14db881c2141395e1d4f6"
+            },
+            "createNoteIdEmpty": {
+                "title": "details of ms acess",
+                "_id": ""
+            },
+            "updatedSuccessfull": {
+                "title": "note HJHJUIIJKJI",
+                "_id": "5da14db881c2141395e1d4f6"
+            }
+        }
+    ],
+    "updateNoteTest": [
+        {
+            "updateNoteAllEmpty": {
+                "title": "",
+                "_id": ""
+            },
+            "updateNoteTitleEmpty": {
+                "title": "",
+                "_id": "5da14db881c2141395e1d4f6"
+            },
+            "updateNoteIdEmpty": {
+                "title": "details of ms acess",
+                "_id": ""
+            },
+            "updatedSuccessfull": {
+                "title": "note HJHJUIIJKJI",
+                "_id": "5da14db881c2141395e1d4f6"
+            }
+        }
+    ],
+    "deleteNoteTest": [
+        {
+            "noteIdEmpty": {
+                "_id": ""
+            },
+            "deletedSucessfull": {
+                "_id": "5d9885541180cb18e8545203"
+            }
+        }
+    ],
+    "searchNoteTest": [
+        {
+            "searchedData": {
+                "searched": ""
+            },
+            "searchSucessfull": {
+                "userId": "5d973f03b7bb2e53bb101c72",
+                "searched": "hellloooooo"
+            }
+        }
+    ],
+    "addLabelOnNoteTest": [
+        {
+            "noteAllEmpty": {
+                "_id": "",
+                "label": ""
+            },
+            "noteIdEmpty": {
+                "_id": "",
+                "label": "5d98853b1180cb18e8545202"
+            },
+            "noteLabelIdEmpty": {
+                "_id": "5d9f006c2f713b1f1eee88e4",
+                "label": ""
+            },
+            "addedSucessfull": {
+                "_id": "5d9f006c2f713b1f1eee88e4",
+                "label": "5d98853b1180cb18e8545202"
+            }
+        }
+    ],
+    "deleteLabelOnNoteTest": [
+        {
+            "noteAllEmpty": {
+                "_id": "",
+                "label": ""
+            },
+            "noteIdEmpty": {
+                "_id": "",
+                "label": "5d9885541180cb18e8545203"
+            },
+            "noteLabelIdEmpty": {
+                "_id": "5d9f006c2f713b1f1eee88e4",
+                "label": ""
+            },
+            "deleteLabelSucessfull": {
+                "_id": "5d9f006c2f713b1f1eee88e4",
+                "label": "5d9885541180cb18e8545203"
+            }
+        }
+    ]
+}

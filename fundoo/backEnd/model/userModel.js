@@ -27,7 +27,7 @@ let registerSchema = mongoose.Schema({
     },
     loginType: {
         type: String,
-        require: [true, "should be string"]
+        // require: [true, "should be string"]
     },
     password: {
         type: String,
@@ -53,6 +53,11 @@ class UserClass {
     constructor() {
         this.newUser = mongoose.model("registrations", registerSchema);
     }
+    /**
+     * method used for create document and save the data in database.
+     *@param {object} userData  
+     */
+  
 
     create(userData) {
         return new Promise((resolve, reject) => {
@@ -60,10 +65,10 @@ class UserClass {
                 "firstName": userData.firstName,
                 "lastName": userData.lastName,
                 "email": userData.email,
-                "loginType": userData.loginType,
+                // "loginType": userData.loginType,
                 "password": userData.password,
                 "isVerify": false
-            });                                                                                                                              
+            });
             user.save()
                 .then(data => {
                     resolve(data);
@@ -73,12 +78,17 @@ class UserClass {
                 });
         });
     }
-
+     /**
+      * search for a particular user
+      * @param {object} search 
+      */
     read(search) {
         return new Promise((resolve, reject) => {
+            
             this.newUser.find(search)
                 .then((data) => {
                     if (data.length > 0) {
+
                         resolve(data);
                     } else {
                         resolve();
@@ -90,15 +100,15 @@ class UserClass {
         });
     }
 
-
+/**
+ * searchBy searching a particular user and update by using updateData
+ * @param {object} searchBy 
+ * @param {object} updateData 
+ */
     update(searchBy, updateData) {
         return new Promise((resolve, reject) => {
-            console.log(searchBy);
-            
             this.newUser.updateOne(searchBy, { $set: updateData })
                 .then(response => {
-                    console.log("updated  ",response);
-                    
                     resolve("updated");
                 }).catch(error => {
                     reject("error");

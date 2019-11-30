@@ -1,0 +1,102 @@
+.fundooApp {
+    text-align: center;
+    font-size: 150%
+  }
+  .fundoo{
+   margin-right: 70%
+  }
+  
+  .label{
+  margin-right: 40%
+  }
+  .fstyle{
+color:#264691
+  }
+  .ustyle{
+    color:#e53024
+  }
+  .nstyle{
+    color:#f1ac03
+  }
+
+  .dstyle{
+    color:#3e9940
+  }
+
+  .ostyle{
+    color:#e53024
+  }
+
+  .Ostyle{
+    color:#264691
+}
+
+  .Astyle{
+    color:#e53024
+  }
+
+  .pstyle{
+    color:#3e9940
+  }
+  .Pstyle{
+    color:#f1ac03
+}
+
+.textInput{
+    text-align: center;
+}
+
+.firstName{
+  margin-right: 70%;
+  font-size: 14px;
+  height: 20px;
+  padding: 7px 11px;
+}
+
+.lastName{
+  margin-left: 30%;
+  font-size: 14px;
+  height: 20px;
+  padding: 7px 11px;  
+}
+
+.email{
+  margin-top: 30%;
+  font-size: 14px;
+  height: 10px;
+  width: 208%;
+  padding: 7px 11px;
+ 
+}
+.password{
+  margin-left: 30%;
+  font-size: 14px;
+  height: 20px;
+  padding: 7px 11px;  
+}
+.label2{
+  font-size: 15px;
+  color: #0e1013;
+  margin-left: 500%;
+  margin-top: 50%
+}
+.register{   
+   top: 50%;
+    left:25% 
+    }
+
+
+ .leftMargin{
+   position: absolute;
+   margin-left: 2%;
+ }
+
+ .rightMargin{
+  position: absolute;
+  margin-left: 30%;
+ }
+
+ .rightMargin1{
+  position: absolute;
+  margin-left: 15%;
+ }

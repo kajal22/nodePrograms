@@ -1,4 +1,4 @@
-require('dotenv').config({_path:'../.env'});
+require("dotenv").config({_path:"../.env"});
 module.exports={
     PORT:process.env.PORT,
     MONGODBURL:process.env.MONGODBURL,

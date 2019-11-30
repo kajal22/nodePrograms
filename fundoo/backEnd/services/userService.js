@@ -15,8 +15,9 @@ const jwt = require("jsonwebtoken");
 const redis = require("redis");
 const utility = require("../utility");
 const nodemailer = require("./emailService");
-
-
+const path = require("path");
+const ejs = require("ejs");
+const redisUtility = require("../services/redisService");
 const client = new redis.createClient();
 
 class Service {
@@ -30,13 +31,9 @@ class Service {
      **/
 
     registrationService(userData) {
-
         return new Promise((resolve, reject) => {
             emailExistence.check(userData.email, function (error, response) {
-                console.log(userData.email);
-                console.log("res: " + response);
-
-                if (response == true) {
+                if (response === true) {
                     let searchByEmail = {
                         "email": userData.email
                     };
@@ -50,7 +47,7 @@ class Service {
                                     "firstName": userData.firstName,
                                     "lastName": userData.lastName,
                                     "email": userData.email,
-                                    "loginType": userData.loginType,
+                                    // "loginType": userData.loginType,
                                     "password": utility.encryptPassword(userData.password)
                                 };
 
@@ -63,21 +60,36 @@ class Service {
 
                                         /****token will generated using paylod that token verify***/
                                         let newToken = utility.generateToken(payload);
+
                                         console.log(newToken);
-                                        let verify = '<h1>click on link to for verification</h1><br><p>Click here <a href="http://localhost:4000/#/verify/' + newToken + '"><u>Click here</a></u> to reset</p>';
-                                        nodemailer.sendmail(data.email, verify, newToken)
-                                            .then((response) => {
-                                                console.log(response);
-                                                console.log("mail sent sucessfully!!");
-                                                console.log("RESPONSE MAIL", response);
-                                                resolve(response);
-                                            }).catch((err) => {
-                                                reject(err);
+                                        redisUtility.redisSet(data._id + "setVerify", newToken)
+
+                                            .then(redisData => {
+                                                console.log("template", redisData);
+
+                                                let verify = "http://localhost:3000/VerifyEmail/" + newToken;
+                                                let template = ejs.renderFile(path.join(__dirname, "../view/register.ejs"),
+                                                    { name: data.firstName, url: verify });
+                                                template.then((ejsTemplate) => {
+                                                    nodemailer.sendmail(data.email, ejsTemplate)
+                                                        .then((response) => {
+                                                            console.log("RESPONSE MAIL", response);
+                                                            resolve(response);
+                                                        }).catch((err) => {
+                                                            reject(err);
+                                                        });
+                                                    resolve(data);
+                                                }).catch(error => {
+                                                    reject(error);
+                                                });
+                                            })
+                                            .catch(error => {
+                                                reject(error);
                                             });
                                         resolve(data);
+
                                     })
                                     .catch(error => {
-                                        console.log("ERROR is CATCHED");
                                         reject(error);
                                     });
                             }
@@ -93,7 +105,6 @@ class Service {
             });
 
         });
-
     }
     /**************loginservice**************/
 
@@ -118,7 +129,6 @@ class Service {
                             };
                             /**password will be compare with entered password and database password**/
                             bcrypt.compare(loginData.password, data[0].password, (err, result) => {
-                                console.log(result);
                                 if (err) {
                                     reject(err);
                                 }
@@ -126,39 +136,26 @@ class Service {
                                 else if (result == true) {
                                     let newToken = utility.generateToken(payload);
                                     console.log(newToken);
-                                    client.set(data[0]._id+"newTokenSet", newToken)
-                                    client.get(data[0]._id+"newTokenSet", function (err, reply) {
-                                    console.log("token reply",reply);
-                                    });
-                                    console.log("password matched");
-                                    console.log("\n\n\t\tLOGIN SUCCESSFULL !");
-                                    let searchById = {
-                                        _id: data[0]._id
-                                    };
-                                    let updateData = {
-                                        token: newToken
-                                    };
-                                    userModel.update(searchById, updateData)
-                                        .then(() => {
-
-                                            let dataObject = {
-                                                success: true,
-                                                msg: "Login Successfully",
-                                                data: {
-                                                    "firstName": data[0].firstName,
-                                                    "lastName": data[0].lastName,
-                                                    "email": data[0].email,
-                                                    "loginType": data[0].loginType,
-                                                    "token": newToken
-                                                }
+                                    redisUtility.redisSet(data[0]._id + "newTokenSet", newToken)
+                                        .then(redisData => {
+                                            console.log("\n\n\t\tLOGIN SUCCESSFULL !");
+                                            let searchById = {
+                                                _id: data[0]._id
                                             };
+                                            let updateData = {
+                                                token: newToken
+                                            };
+                                            userModel.update(searchById, updateData)
+                                                .then(() => {
+                                                    data[0].token = newToken;
+                                                    resolve(data[0]);
 
-
-                                            resolve(dataObject);
-
-                                        }).catch(error => {
-                                            console.log("error in catch");
-                                            reject(error);
+                                                }).catch(error => {
+                                                    reject(error);
+                                                });
+                                        })
+                                        .catch(err => {
+                                            reject(err);
                                         });
                                 } else if (result == false) {
                                     reject("login Failed");
@@ -197,8 +194,10 @@ class Service {
                             "_id": data[0]._id
                         };
                         let newToken = utility.generateToken(payload);
-                        console.log(newToken);
-                        let resetLink = '<h1>click on link to for Reset Password</h1><br><p><a href="http://localhost:4000/#/resetPassword/' + newToken + '"><u>Click here</a></u> to reset</p>';
+                        redisUtility.redisSet(data[0]._id + "resetVerify", newToken)
+                            .then(redisData => {
+                            });
+                        let resetLink = "<h1>click on link to for Reset Password</h1><br><p><a href=\"http://localhost:3000/#/resetPassword/" + newToken + "\"><u>Click here</a></u> to reset</p>";
                         nodemailer.sendmail(forgetData.email, resetLink, newToken).then((response) => {
                             console.log("mail sent sucessfully!!");
                             resolve(response);
@@ -224,8 +223,8 @@ class Service {
 
     resetPassService(resetData) {
         let hashedPassword = utility.encryptPassword(resetData.password);
-        console.log("password", hashedPassword);
         return new Promise((resolve, reject) => {
+
             let searchById = {
                 _id: resetData._id
             };
@@ -237,7 +236,6 @@ class Service {
                     resolve(data);
 
                 }).catch(error => {
-                    console.log("error");
                     reject(error);
                 });
         });
@@ -264,19 +262,20 @@ class Service {
             }
 
         } catch (error) {
-            console.log(error);
         }
     }
 
     async uploadService(uploadData) {
+        console.log("upload", uploadData);
+
         try {
             let searchBy = {
                 "_id": uploadData.id
-            }
+            };
             let updateData = {
                 "imageUrl": uploadData.url
-            }
-            let upload = await userModel.update(searchBy, updateData)
+            };
+            let upload = await userModel.update(searchBy, updateData);
             if (upload == "updated") {
                 return true;
             } else {
@@ -284,7 +283,6 @@ class Service {
             }
 
         } catch (error) {
-            console.log(error);
         }
 
     }

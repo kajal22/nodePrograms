@@ -1,0 +1,62 @@
+.fundooApp {
+    text-align: center;
+    font-size: 150%
+  }
+  .heading{
+      font-size: 15px;
+      color: #264691;
+     top: 40%;
+     left: 80%
+  }
+  .ForgetPass{
+    font-size: 30px;
+    
+}
+  
+  .fstyle{
+color:#264691
+  }
+  .ustyle{
+    color:#e53024
+  }
+  .nstyle{
+    color:#f1ac03
+  }
+
+  .dstyle{
+    color:#3e9940
+  }
+
+  .ostyle{
+    color:#e53024
+  }
+
+  .Ostyle{
+    color:#264691
+}
+
+  .Astyle{
+    color:#e53024
+  }
+
+  .pstyle{
+    color:#3e9940
+  }
+  .Pstyle{
+    color:#f1ac03
+}
+
+.textInput{
+    text-align: center;
+}
+
+
+.forgetButton{   
+   top: 50%;
+    left:25% 
+    }
+
+.cancelButton{
+    top: 50%;
+    right:20% 
+ }

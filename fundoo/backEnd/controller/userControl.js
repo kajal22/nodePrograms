@@ -12,26 +12,31 @@
 
 
 const userService = require("../services/userService");
-const s3 = require("../config/s3")
+const s3 = require("../services/s3Service");
 
 class Controller {
+    /**
+    * 
+    * @param {object} req user request 
+    * @param {object} res response from server
+    */
     registrationControl(req, res) {
+        
         try {
             /******take firstname,lastName,email and password in body******/
 
-            req.check("firstName", "firstName should be string format").isAlpha();
-            req.check("firstName", "firstName should not empty").notEmpty();
-            req.check("lastName", "lastName should be string format").isAlpha();
-            req.check("lastName", "lastName should not empty").notEmpty();
-            req.check("loginType", "loginType should be string").isAlpha();
-            req.check("loginType", "loginType should not empty").notEmpty();
-            req.check("email", "email should be string format").isEmail();
-            req.check("email", "lastName should not empty").notEmpty();
-            req.check("password", "password should not empty").notEmpty();
-            req.check("password", "password of minimum length ").isLength({ min: 5 });
-            req.check("password", "password of maximum length ").isLength({ max: 10 });
+            req.checkBody("firstName", "firstName should be string format").isAlpha();
+            req.checkBody("firstName", "firstName should not empty").notEmpty();
+            req.checkBody("lastName", "lastName should be string format").isAlpha();
+            req.checkBody("lastName", "lastName should not empty").notEmpty();
+            req.checkBody("email", "email should be string format").isEmail();
+            req.checkBody("email", "lastName should not empty").notEmpty();
+            req.checkBody("password", "password should not empty").notEmpty();
+            req.checkBody("password", "password of minimum length ").isLength({ min: 5 });
+            req.checkBody("password", "password of maximum length ").isLength({ max: 10 });
 
             let error = req.validationErrors();
+            
             let response = {};
             if (error) {
                 response.success = false;
@@ -46,14 +51,14 @@ class Controller {
                     "firstName": req.body.firstName,
                     "lastName": req.body.lastName,
                     "email": req.body.email,
-                    "loginType": req.body.loginType,
                     "password": req.body.password
                 };
-
+                
                 userService.registrationService(userData)
                     .then((data) => {
                         response.success = true;
                         response.message = "REGISTERED SUCESSFULLY!";
+                        response.data = data;
                         return res.status(200).send(response);
                     })
                     .catch((error) => {
@@ -63,19 +68,24 @@ class Controller {
                         return res.status(400).send(response);
                     });
             }
-        } catch (err) {
-            return res.status(400).send(response);
+        } catch (err) { 
+            return res.status(400).send(err);
         }
     }
     //************************logincontrolller*********************************/
+    /**
+    * 
+    * @param {object} req user request 
+    * @param {object} res response from server
+    */
     loginControl(req, res) {
 
         try {
-            req.check("email", "email should be string format").isEmail();
-            req.check("email", "lastName should not empty").notEmpty();
-            req.check("password", "password should not empty").notEmpty();
-            req.check("password", "password of minimum length").isLength({ min: 5 });
-            req.check("password", "password of maximum length").isLength({ max: 10 });
+            req.checkBody("email", "email should be string format").isEmail();
+            req.checkBody("email", "lastName should not empty").notEmpty();
+            req.checkBody("password", "password should not empty").notEmpty();
+            req.checkBody("password", "password of minimum length").isLength({ min: 5 });
+            req.checkBody("password", "password of maximum length").isLength({ max: 10 });
 
             let error = req.validationErrors();
             let response = {};
@@ -94,7 +104,10 @@ class Controller {
 
                 userService.loginService(loginData)
                     .then(data => {
-                        return res.status(200).send(data);
+                        response.success = true;
+                        response.message = "LOGIN SUCESSFULLY!";
+                        response.data = data;
+                        return res.status(200).send(response);
                     })
                     .catch(error => {
                         response.success = false;
@@ -103,15 +116,20 @@ class Controller {
                     });
             }
         } catch (err) {
-            return res.status(400).send(response);
+            return res.status(400).send(err);
         }
     }
     /**************************forgetControl***********************/
+    /**
+    * 
+    * @param {object} req user request 
+    * @param {object} response from server
+    */
     forgetPassControl(req, res) {
         try {
 
-            req.check("email", "email should be string format").isEmail();
-            req.check("email", "lastName should not empty").notEmpty();
+            req.checkBody("email", "email should be string format").isEmail();
+            req.checkBody("email", "lastName should not empty").notEmpty();
 
 
             let error = req.validationErrors();
@@ -131,6 +149,7 @@ class Controller {
                     .then(data => {
                         response.success = true;
                         response.message = "EMAIL SENT SUCESSFULLY!";
+                        response.data = data;
                         return res.status(200).send(response);
                     })
                     .catch(error => {
@@ -145,11 +164,16 @@ class Controller {
         }
     }
     /*************************resetControl******************************/
+    /**
+    * 
+    * @param {object} req user request 
+    * @param {object} res response from server
+    */
     resetPassControl(req, res) {
         try {
-            req.check("password", "password should not empty").notEmpty();
-            req.check("password", "password of minimum length").isLength({ min: 5 });
-            req.check("password", "password of maximum length").isLength({ max: 10 });
+            req.checkBody("password", "password should not empty").notEmpty();
+            req.checkBody("password", "password of minimum length").isLength({ min: 5 });
+            req.checkBody("password", "password of maximum length").isLength({ max: 10 });
             let error = req.validationErrors();
             let response = {};
 
@@ -186,7 +210,11 @@ class Controller {
     }
     /****************************verifytoken*****************************/
 
-
+    /**
+    * 
+    * @param {object} req user request 
+    * @param {object} res response from server
+    */
     async verifyEmail(req, res) {
         try {
             let response = {};
@@ -211,34 +239,43 @@ class Controller {
 
         }
     }
-
-    async uploadControl(req, res) {
-        const s3url = await s3.getSignedUrl('getObject', { Bucket: process.env.BUCKET, Key: req.file.originalname });
-
-        let uploadFile = {
-            "id": req.token._id,
-            "url": s3url
-        }
-        console.log(uploadFile);
-
-        let fileUploadResponse = await userService.uploadService(uploadFile)
+    /**
+    * 
+    * @param {object} req user request 
+    * @param {object} res response from server
+    */
+    async uploadControl(request) {
+        
         let response = {};
-        if (fileUploadResponse) {
-            response.success = true;
-            response.message = "uploaded successfully";
-            response.data = fileUploadResponse;
+        try {
+           
+                // const s3url = await s3.getSignedUrl("getObject", { Bucket: process.env.BUCKET, Key: req.file.originalname });
+                let uploadFile = {
+                    "id": request._id,
+                    "url":request.s3url
+                };
+        
+                let fileUploadResponse = await userService.uploadService(uploadFile);
+                let response = {};
+                if (fileUploadResponse) {
+                    response.success = true;
+                    response.message = "uploaded successfully";
+                    response.data = fileUploadResponse;
 
-            return res.status(200).send(response);
-        } else {
-            response.success = false;
-            response.message = "ERROR OCCURED SUCCESSFULLY";
-            response.error = fileUploadResponse;
+                    return (response);
+                } else {
+                    response.success = false;
+                    response.message = "ERROR OCCURED SUCCESSFULLY";
+                    response.error = fileUploadResponse;
 
-            return res.status(400).send(response);
+                    return(response);
 
+                }
+            // }
+
+        } catch (err) {
+            return (err);
         }
-
-
     }
 }
 const controlObject = new Controller();

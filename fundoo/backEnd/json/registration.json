@@ -80,7 +80,7 @@
             }
         }
     ],
-       "loginTest": [
+    "loginTest": [
         {
             "loginEmpty": {
                 "email": "",
@@ -137,13 +137,27 @@
                 "password": "kajal"
             },
             "tokenHeader": {
-                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkxN2NmNDFiNDY1OTE1MjYzZjk3NjAiLCJpYXQiOjE1Njk4NDA0NjAsImV4cCI6MTU2OTg2MjA2MH0.Cmq9SBHASWLqzUMBH4udhuD7iniS9uH8_Dc3rJ0OnOw"
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGIyY2EwN2UxZjJiNDQyMDAyZTE4NWMiLCJpYXQiOjE1NzI1Mjc1ODUsImV4cCI6MTU3MjU1NjM4NX0.CWQqQTTHPeO7gVZzEb7ou7HRz_IvUYDcFYQxE07EPWQ"
+            },
+            "emptyToken": {
+                "token": ""
+            }
+        }
+    ],
+    "uploadTest": [
+        {
+            "urlEmpty": {
+                "file":""
+            },
+            "uploadSucessfull": {
+                "file": "bg.jpg"
+            },
+            "tokenHeader": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDk3M2YwM2I3YmIyZTUzYmIxMDFjNzIiLCJpYXQiOjE1NzEyMjg2MjksImV4cCI6MTU3MTI1NzQyOX0.HcmGSPLPoHcjKky2ldxAeLMnz5alwkMkVKnWQzXXGhU"
             },
             "emptyToken": {
                 "token": ""
             }
         }
     ]
-
-    
 }
